@@ -35,13 +35,13 @@ export function AgentPhoneMockup() {
   }, [chatState])
 
   return (
-    <div className="relative w-full max-w-[375px] mx-auto perspective-1000">
+    <div className="relative w-full flex justify-center perspective-1000 origin-top scale-[0.8] sm:scale-[0.9] lg:scale-100 -mb-[150px] sm:-mb-[70px] lg:mb-0">
       {/* 
         Phone Frame (Using the exact prompt shadows for realistic bevels)
         Dimensions: 375x780, border-radius: 52px
       */}
       <div 
-        className="relative mx-auto bg-white overflow-hidden"
+        className="relative bg-white overflow-hidden"
         style={{
           width: '375px',
           height: '780px',
