@@ -1,17 +1,30 @@
 import { useState, useEffect, useRef } from 'react'
-import { Mic, Send, Sparkles, User, ShieldCheck, ChevronLeft, MoreHorizontal, Activity } from 'lucide-react'
+import { Mic, Send, Sparkles, User, ShieldCheck, ChevronLeft, MoreHorizontal, Activity, RefreshCw } from 'lucide-react'
 
 export function AgentPhoneMockup() {
-  const [chatState, setChatState] = useState<'idle' | 'typing' | 'replied'>('idle')
+  const [chatState, setChatState] = useState<'idle' | 'typing' | 'replying_text' | 'scanning_safety' | 'replied_full'>('idle')
   const chatContainerRef = useRef<HTMLDivElement>(null)
   
   const handleAsk = () => {
     if (chatState !== 'idle') return
     
+    // 1. Show bouncing dots (AI is typing)
     setChatState('typing')
+    
+    // 2. Show the text answer
     setTimeout(() => {
-      setChatState('replied')
-    }, 2000)
+      setChatState('replying_text')
+      
+      // 3. Show "Checking safety rules" loader
+      setTimeout(() => {
+        setChatState('scanning_safety')
+        
+        // 4. Show the final red warning card
+        setTimeout(() => {
+          setChatState('replied_full')
+        }, 1800)
+      }, 1200)
+    }, 1500)
   }
 
   // Scroll to bottom when new messages appear
@@ -107,8 +120,8 @@ export function AgentPhoneMockup() {
               </div>
             )}
 
-            {/* AI Reply */}
-            {chatState === 'replied' && (
+            {/* AI Reply (Text and Scanning) */}
+            {['replying_text', 'scanning_safety', 'replied_full'].includes(chatState) && (
               <div className="flex items-end gap-2 max-w-[90%] animate-in fade-in slide-in-from-bottom-2 duration-500">
                 <div className="w-8 h-8 rounded-full bg-[#216e63] flex items-center justify-center flex-shrink-0 shadow-md">
                   <Sparkles className="w-4 h-4 text-white" />
@@ -118,16 +131,28 @@ export function AgentPhoneMockup() {
                     เบื้องต้นแนะนำให้ทานยา <strong className="text-[#216e63]">พาราเซตามอล (Paracetamol) 500mg</strong> จำนวน 1 เม็ด ทุกๆ 4-6 ชั่วโมงค่ะ 💊
                   </div>
                   
-                  {/* Warning Card inside chat */}
-                  <div className="bg-[#fff1f2] border border-[#ffe4e6] p-3 rounded-xl shadow-xs">
-                    <div className="flex items-center gap-1.5 mb-1 text-[#b42318] text-xs font-bold">
-                      <Activity className="w-3.5 h-3.5" />
-                      ระบบคัดกรองความปลอดภัย
+                  {/* Step 3: Scanning Safety Rules */}
+                  {chatState === 'scanning_safety' && (
+                    <div className="bg-[#f6f8f7] border border-[#dde5e2] p-3 rounded-xl shadow-xs flex items-center gap-2 animate-in fade-in duration-300">
+                      <RefreshCw className="w-4 h-4 text-[#216e63] animate-spin" />
+                      <div className="text-[11px] text-[#4a5855] font-mono tracking-wide">
+                        กำลังตรวจสอบประวัติสุขภาพของคุณ...
+                      </div>
                     </div>
-                    <div className="text-[11px] text-[#9f1239] leading-relaxed">
-                      ตรวจสอบจากประวัติสุขภาพของคุณในระบบ ไม่พบโรคประจำตัวเกี่ยวกับตับ สามารถทานได้ปลอดภัยค่ะ แต่ถ้าทานแล้วอาการไม่ดีขึ้นภายใน 24 ชม. แนะนำให้พบแพทย์นะคะ
+                  )}
+
+                  {/* Step 4: Final Warning Card */}
+                  {chatState === 'replied_full' && (
+                    <div className="bg-[#fff1f2] border border-[#ffe4e6] p-3 rounded-xl shadow-xs animate-in zoom-in-95 duration-300">
+                      <div className="flex items-center gap-1.5 mb-1 text-[#b42318] text-xs font-bold">
+                        <Activity className="w-3.5 h-3.5" />
+                        ระบบคัดกรองความปลอดภัย
+                      </div>
+                      <div className="text-[11px] text-[#9f1239] leading-relaxed">
+                        ตรวจสอบจากประวัติสุขภาพของคุณในระบบ ไม่พบโรคประจำตัวเกี่ยวกับตับ สามารถทานได้ปลอดภัยค่ะ แต่ถ้าทานแล้วอาการไม่ดีขึ้นภายใน 24 ชม. แนะนำให้พบแพทย์นะคะ
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             )}
@@ -139,7 +164,7 @@ export function AgentPhoneMockup() {
             {chatState === 'idle' ? (
               <button 
                 onClick={handleAsk}
-                className="w-full flex items-center justify-between bg-[#f6f8f7] border border-[#dde5e2] p-2 pl-4 rounded-full group hover:border-[#216e63]/40 transition-colors"
+                className="w-full flex items-center justify-between bg-[#f6f8f7] border border-[#dde5e2] p-2 pl-4 rounded-full group hover:border-[#216e63]/40 transition-colors cursor-pointer"
               >
                 <span className="text-[#64716e] text-sm">วันนี้ปวดหัวจังกินยาอะไรดี...</span>
                 <div className="w-9 h-9 rounded-full bg-[#216e63] flex items-center justify-center text-white shadow-md group-active:scale-95 transition-transform">
