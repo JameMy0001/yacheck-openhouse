@@ -76,7 +76,7 @@ export function ProblemSection() {
                 </ScrollReveal>
 
                 <ScrollReveal direction={item.side} delay={0.12}>
-                  <div className="text-[clamp(3.5rem,9vw,5.75rem)] font-black text-[#b42318] font-mono leading-none tracking-tight mb-2 drop-shadow-xs">
+                  <div className="text-[clamp(3.5rem,9vw,5.75rem)] font-black text-[#b42318]/60 font-mono leading-none tracking-tight mb-2 drop-shadow-xs">
                     {item.stat}
                   </div>
                 </ScrollReveal>

@@ -101,7 +101,7 @@ export function FeaturesSection() {
                     <span className="text-xs font-mono font-bold tracking-widest px-3 py-1 rounded-full bg-[#f6f8f7] border border-[#dde5e2] text-[#216e63]">
                       {item.tag}
                     </span>
-                    <span className="text-[2.25rem] font-black text-[#216e63]/20 leading-none tracking-tighter select-none font-mono">
+                    <span className="text-[2.25rem] font-black text-[#216e63]/40 leading-none tracking-tighter select-none font-mono">
                       {item.id}
                     </span>
                   </div>
