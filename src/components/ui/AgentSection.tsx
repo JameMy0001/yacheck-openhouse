@@ -1,5 +1,6 @@
-import { BrainCircuit, ShieldCheck, FileCheck2, UserCheck, Activity, Database, CheckCircle2, Lock } from 'lucide-react'
-import { ScrollReveal } from './ScrollReveal.tsx'
+import { BrainCircuit, CheckCircle2, Database, Lock, Activity, UserCheck, ShieldCheck, FileCheck2 } from 'lucide-react'
+import { ScrollReveal } from './ScrollReveal'
+import { AgentPhoneMockup } from './AgentPhoneMockup'
 
 export function AgentSection() {
   const agentDomains = [
@@ -43,32 +44,42 @@ export function AgentSection() {
     >
       <div className="max-w-6xl w-full mx-auto flex flex-col pointer-events-auto px-6 sm:px-12 lg:px-16">
 
-        {/* Section Header — Clean Typography */}
-        <div className="flex flex-col items-start max-w-2xl mb-16 sm:mb-24">
-          <ScrollReveal direction="left" delay={0.05}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#216e63]/25 bg-[#e5f4f0] text-[#216e63] text-[11px] font-mono font-bold tracking-widest uppercase mb-4 shadow-xs">
-              <BrainCircuit className="w-3.5 h-3.5 text-[#216e63]" />
-              <span>Intelligent Care Architecture</span>
-            </div>
+        {/* Section Header & Phone Mockup Container */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-16 sm:mb-24">
+          
+          {/* Header Text */}
+          <div className="flex flex-col items-start max-w-xl">
+            <ScrollReveal direction="left" delay={0.05}>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#216e63]/25 bg-[#e5f4f0] text-[#216e63] text-[11px] font-mono font-bold tracking-widest uppercase mb-4 shadow-xs">
+                <BrainCircuit className="w-3.5 h-3.5 text-[#216e63]" />
+                <span>Intelligent Care Architecture</span>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="left" delay={0.12}>
+              <h2 className="text-[clamp(2.75rem,7vw,5rem)] font-black tracking-tight text-[#17211f] leading-none mb-3">
+                Care Agent<span className="text-[#f2a65a]">.</span>
+              </h2>
+            </ScrollReveal>
+
+            <ScrollReveal direction="left" delay={0.18}>
+              <p className="text-[clamp(1.15rem,2.2vw,1.6rem)] font-bold text-[#216e63] leading-snug mb-4">
+                ระบบ AI ผู้ช่วยที่คิดรอบคอบ และไม่เดาข้อมูลมั่ว
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal direction="left" delay={0.25}>
+              <p className="text-sm sm:text-base text-[#4a5855] font-normal leading-relaxed max-w-xl">
+                ไม่ใช่แค่แชทบอทที่ตอบไปเรื่อย แต่เป็น <strong className="text-[#17211f] font-bold">AI ผู้ช่วยทางการแพทย์</strong> ที่คิดตามหลักความปลอดภัย ตรวจสอบข้อมูลรอบด้านเพื่อสุขภาพของทุกคนในบ้าน
+              </p>
+            </ScrollReveal>
+          </div>
+
+          {/* Interactive Phone Mockup */}
+          <ScrollReveal direction="up" delay={0.3} className="w-full lg:w-auto flex justify-center mt-10 lg:mt-0 lg:ml-auto">
+            <AgentPhoneMockup />
           </ScrollReveal>
 
-          <ScrollReveal direction="left" delay={0.12}>
-            <h2 className="text-[clamp(2.75rem,7vw,5rem)] font-black tracking-tight text-[#17211f] leading-none mb-3">
-              Care Agent<span className="text-[#f2a65a]">.</span>
-            </h2>
-          </ScrollReveal>
-
-          <ScrollReveal direction="left" delay={0.18}>
-            <p className="text-[clamp(1.15rem,2.2vw,1.6rem)] font-bold text-[#216e63] leading-snug mb-4">
-              ระบบ AI ผู้ช่วยที่คิดรอบคอบ และไม่เดาข้อมูลมั่ว
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal direction="left" delay={0.25}>
-            <p className="text-sm sm:text-base text-[#4a5855] font-normal leading-relaxed max-w-xl">
-              ไม่ใช่แค่แชทบอทที่ตอบไปเรื่อย แต่เป็น <strong className="text-[#17211f] font-bold">AI ผู้ช่วยทางการแพทย์</strong> ที่คิดตามหลักความปลอดภัย ตรวจสอบข้อมูลรอบด้านเพื่อสุขภาพของทุกคนในบ้าน
-            </p>
-          </ScrollReveal>
         </div>
 
         {/* The 3 Professional Pillars */}
