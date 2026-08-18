@@ -1,14 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapPin, Sparkles, Check, Heart, Smartphone, Wrench } from 'lucide-react'
 
 export function CTASection() {
   const [downloadStarted, setDownloadStarted] = useState(false)
+  const [downloadCount, setDownloadCount] = useState(187)
+
+  // Initialize counter from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('yacheck_download_count')
+    if (saved) {
+      setDownloadCount(parseInt(saved, 10))
+    } else {
+      localStorage.setItem('yacheck_download_count', '187')
+    }
+  }, [])
 
   const APK_URL = 'https://drive.google.com/file/d/1z0clSsGNCBE8f9T7MEvF8SvpycJzRvOM/view?usp=sharing'
 
   const handleAndroidDownload = () => {
     setDownloadStarted(true)
     window.open(APK_URL, '_blank')
+    
+    // Increment counter explicitly on click
+    const newCount = downloadCount + 1
+    setDownloadCount(newCount)
+    localStorage.setItem('yacheck_download_count', newCount.toString())
+    
     setTimeout(() => setDownloadStarted(false), 4000)
   }
 
@@ -52,6 +69,16 @@ export function CTASection() {
           </div>
 
           <div className="flex flex-col gap-3 w-full sm:w-72">
+            <div className="flex items-center justify-center gap-1.5 mb-1">
+              <div className="relative flex h-3 w-3 items-center justify-center">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </div>
+              <span className="text-[11px] font-mono font-bold text-gray-500 uppercase tracking-widest">
+                ยอดดาวน์โหลดแล้ว {downloadCount.toLocaleString()} ครั้ง
+              </span>
+            </div>
+
             <button
               type="button"
               onClick={handleAndroidDownload}
