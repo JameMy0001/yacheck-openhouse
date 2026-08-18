@@ -55,48 +55,17 @@ export function DataNetwork() {
 
   // Setup instanced mesh matrix
   const dummy = useMemo(() => new THREE.Object3D(), [])
-  const targetScale = useRef<number[]>(Array(nodeCount).fill(1))
-  
-  useFrame((state, delta) => {
+  useFrame(() => {
     if (nodesRef.current) {
-      // Map pointer from normalized device coordinates to rough 3D world coords
-      const pointerX = (state.pointer.x * state.viewport.width) / 2
-      const pointerY = (state.pointer.y * state.viewport.height) / 2
-
       for (let i = 0; i < nodeCount; i++) {
-        let x = positions[i * 3]
-        let y = positions[i * 3 + 1]
-        let z = positions[i * 3 + 2]
-
-        // Calculate distance from pointer to node (in 2D projection)
-        // Adjust for network rotation if possible, but a rough approximation is fine for effect
-        const dx = x - pointerX
-        const dy = y - pointerY
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        
-        let repelX = 0
-        let repelY = 0
-        let s = 1.0
-
-        if (dist < 1.5) {
-          // Repel force
-          const force = (1.5 - dist) * 0.5
-          repelX = (dx / dist) * force
-          repelY = (dy / dist) * force
-          s = 1.0 + force * 2.0
-        }
-
-        targetScale.current[i] = THREE.MathUtils.damp(targetScale.current[i], s, 4, delta)
-
-        dummy.position.set(x + repelX, y + repelY, z)
-        
+        dummy.position.set(
+          positions[i * 3],
+          positions[i * 3 + 1],
+          positions[i * 3 + 2]
+        )
         // Add subtle floating animation to nodes
         const time = scrollProgress * 10
         dummy.position.y += Math.sin(time + i) * 0.1
-        
-        const currentS = targetScale.current[i]
-        dummy.scale.setScalar(currentS)
-
         dummy.updateMatrix()
         nodesRef.current.setMatrixAt(i, dummy.matrix)
       }

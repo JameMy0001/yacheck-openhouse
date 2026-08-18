@@ -22,7 +22,6 @@ export default function App() {
 
   const {
     scrollProgress,
-    scrollVelocity,
     dangerMix,
     explode,
     cameraZ,
@@ -52,7 +51,6 @@ export default function App() {
             <Suspense fallback={null}>
               <Scene
                 scrollProgress={scrollProgress}
-                scrollVelocity={scrollVelocity}
                 dangerMix={dangerMix}
                 explodeProgress={explode}
                 cameraZ={cameraZ}

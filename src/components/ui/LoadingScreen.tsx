@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { Loader2, Sparkles, Power } from 'lucide-react'
-import { synth } from '../../utils/audioSynth.ts'
+import { Loader2, Sparkles } from 'lucide-react'
 
 export interface LoadingScreenProps {
   onComplete: () => void
@@ -14,7 +13,6 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   
   const [progress, setProgress] = useState(0)
   const [loadingText, setLoadingText] = useState('INITIALIZING SYSTEMS')
-  const [isReady, setIsReady] = useState(false)
 
   // Simulation of loading assets & 3D WebGL compiling
   useEffect(() => {
@@ -27,9 +25,27 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         current = 100
         clearInterval(interval)
         
-        setTimeout(() => {
-          setIsReady(true)
-        }, 500)
+        // Auto-complete immediately instead of Tap to Enter
+        const tl = gsap.timeline({
+          onComplete: () => {
+            if (containerRef.current) {
+              containerRef.current.style.display = 'none'
+            }
+            onComplete()
+          }
+        })
+
+        tl.to(textRef.current, {
+          opacity: 0,
+          y: -20,
+          duration: 0.4,
+          ease: 'power2.in',
+        })
+        tl.to(containerRef.current, {
+          yPercent: -100,
+          duration: 0.8,
+          ease: 'power3.inOut',
+        }, '-=0.2')
       }
       
       setProgress(Math.min(current, 100))
@@ -43,36 +59,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
     }, 150)
 
     return () => clearInterval(interval)
-  }, [])
-
-  const handleEnter = () => {
-    // 1. Initialize Audio Context on User Gesture
-    synth.init()
-    synth.startAmbientDrone()
-    synth.playHoverClick()
-
-    // 2. Play exit animation
-    const tl = gsap.timeline({
-      onComplete: () => {
-        if (containerRef.current) {
-          containerRef.current.style.display = 'none'
-        }
-        onComplete()
-      }
-    })
-
-    tl.to(textRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.4,
-      ease: 'power2.in',
-    })
-    tl.to(containerRef.current, {
-      yPercent: -100,
-      duration: 0.8,
-      ease: 'power3.inOut',
-    }, '-=0.2')
-  }
+  }, [onComplete])
 
   return (
     <div
@@ -95,40 +82,23 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div className="text-3xl font-black tracking-tight">YaCheck<span className="text-[#00F2FE]">.</span></div>
         </div>
 
-        {/* Dynamic State */}
-        {!isReady ? (
-          <>
-            {/* Loading Bar */}
-            <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-6 relative">
-              <div 
-                ref={barRef}
-                className="absolute top-0 left-0 h-full bg-[#00F2FE] transition-all duration-300 ease-out shadow-[0_0_15px_#00F2FE]"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            
-            {/* Stats / Loading Text */}
-            <div className="flex items-center justify-between w-full text-[10px] font-mono tracking-widest text-[#a0b0ac] uppercase">
-              <span className="flex items-center gap-2">
-                <Loader2 className="w-3 h-3 animate-spin text-[#00F2FE]" />
-                {loadingText}
-              </span>
-              <span className="text-[#00F2FE] font-bold">{Math.floor(progress)}%</span>
-            </div>
-          </>
-        ) : (
-          <button
-            onClick={handleEnter}
-            onMouseEnter={() => synth.playHoverClick()}
-            className="group relative flex items-center justify-center gap-3 w-full py-4 rounded-xl border border-[#00F2FE]/40 bg-[#00F2FE]/10 hover:bg-[#00F2FE]/20 hover:border-[#00F2FE] transition-all overflow-hidden cursor-pointer"
-          >
-            <div className="absolute inset-0 w-1/4 h-full bg-gradient-to-r from-transparent via-[#00F2FE]/20 to-transparent skew-x-[-45deg] group-hover:animate-[shimmer_1.5s_infinite]" />
-            <Power className="w-4 h-4 text-[#00F2FE] group-hover:scale-110 transition-transform" />
-            <span className="text-sm font-mono font-bold tracking-widest text-white uppercase group-hover:text-[#00F2FE] transition-colors">
-              Tap to Enter Experience
-            </span>
-          </button>
-        )}
+        {/* Loading Bar */}
+        <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-6 relative">
+          <div 
+            ref={barRef}
+            className="absolute top-0 left-0 h-full bg-[#00F2FE] transition-all duration-300 ease-out shadow-[0_0_15px_#00F2FE]"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        
+        {/* Stats / Loading Text */}
+        <div className="flex items-center justify-between w-full text-[10px] font-mono tracking-widest text-[#a0b0ac] uppercase">
+          <span className="flex items-center gap-2">
+            <Loader2 className="w-3 h-3 animate-spin text-[#00F2FE]" />
+            {loadingText}
+          </span>
+          <span className="text-[#00F2FE] font-bold">{Math.floor(progress)}%</span>
+        </div>
 
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { synth } from '../utils/audioSynth'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -27,11 +26,6 @@ export function useScrollytelling(containerId = '#scroll-container') {
     capsuleScale: 1.0,
     networkScale: 0.0,
   })
-
-  // Play a sound whenever section changes
-  useEffect(() => {
-    synth.playMilestoneBlip()
-  }, [currentSection])
 
   useEffect(() => {
     const sections: SectionId[] = [
