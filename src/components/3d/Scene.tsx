@@ -1,13 +1,16 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useRef } from 'react'
 import { Environment, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
-import { MedicalCapsuleStudio } from './MedicalCapsuleStudio.tsx'
-import { DataNetwork } from './DataNetwork.tsx'
-import { ErrorBoundary } from '../common/ErrorBoundary.tsx'
+import { EffectComposer, ChromaticAberration, Noise, Vignette } from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+import { MedicalCapsuleStudio } from './MedicalCapsuleStudio'
+import { DataNetwork } from './DataNetwork'
+import { ErrorBoundary } from '../common/ErrorBoundary'
 
 export interface SceneProps {
   scrollProgress?: number
+  scrollVelocity?: number
   dangerMix?: number
   isExploded?: boolean
   explodeProgress?: number
@@ -16,6 +19,29 @@ export interface SceneProps {
   capsuleScale?: number
   networkScale?: number
   className?: string
+}
+
+function PostProcessEffects({ scrollVelocity = 0 }) {
+  const caRef = useRef<any>(null)
+  
+  useFrame(() => {
+    if (caRef.current) {
+      // Aberration intensity based on scroll speed
+      const intensity = Math.min(Math.abs(scrollVelocity) * 0.05, 0.05)
+      caRef.current.offset.set(intensity, intensity)
+    }
+  })
+
+  return (
+    <EffectComposer>
+      <ChromaticAberration
+        ref={caRef}
+        offset={new THREE.Vector2(0, 0)}
+      />
+      <Noise opacity={0.035} blendFunction={BlendFunction.OVERLAY} />
+      <Vignette eskil={false} offset={0.1} darkness={0.9} blendFunction={BlendFunction.NORMAL} />
+    </EffectComposer>
+  )
 }
 
 /**
@@ -75,6 +101,7 @@ export function CameraController({
 
 export function Scene({
   scrollProgress = 0,
+  scrollVelocity = 0,
   dangerMix = 0,
   explodeProgress = 0,
   cameraZ = 5.8,
@@ -130,6 +157,8 @@ export function Scene({
               far={4}
               color="#0f172a"
             />
+            
+            <PostProcessEffects scrollVelocity={scrollVelocity} />
           </Suspense>
         </Canvas>
       </div>

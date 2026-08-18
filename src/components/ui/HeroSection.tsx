@@ -1,5 +1,6 @@
 import { Sparkles, ShieldCheck, Clock, Users, ArrowDown } from 'lucide-react'
-import { ScrollReveal } from './ScrollReveal.tsx'
+import { ScrollReveal } from './ScrollReveal'
+import { TextReveal } from './TextReveal'
 
 export interface HeroSectionProps {
   onExploreClick?: () => void
@@ -49,23 +50,19 @@ export function HeroSection({ onExploreClick }: HeroSectionProps) {
       <div className="pointer-events-auto w-full max-w-lg flex flex-col items-start mt-16 md:mt-0">
 
         <ScrollReveal direction="left" delay={0.1}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-5 rounded-full border border-[#216e63]/25 bg-[#e5f4f0] text-[#216e63] text-[11px] font-mono font-bold tracking-widest uppercase shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-5 rounded-full border border-[#216e63]/25 bg-[#e5f4f0] text-[#216e63] text-[11px] font-mono font-bold tracking-widest uppercase shadow-2xs hover:-translate-y-1 transition-transform">
             <Sparkles className="w-3.5 h-3.5 text-[#216e63]" />
             <span>เพื่อนคู่คิดเรื่องยาประจำบ้าน</span>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal direction="left" delay={0.18}>
-          <h1 className="text-[clamp(3.5rem,9vw,6.5rem)] font-black tracking-tighter leading-[0.88] text-[#17211f]">
-            YaCheck<span className="text-[#f2a65a]">.</span>
-          </h1>
-        </ScrollReveal>
+        <h1 className="text-[clamp(3.5rem,9vw,6.5rem)] font-black tracking-tighter leading-[0.88] text-[#17211f]">
+          <TextReveal>YaCheck.</TextReveal>
+        </h1>
 
-        <ScrollReveal direction="left" delay={0.28}>
-          <p className="mt-4 text-[clamp(1rem,2.2vw,1.25rem)] font-bold text-[#216e63] leading-snug">
-            กินยาให้ถูก ไม่ต้องลุ้น ไม่ต้องจำคนเดียว
-          </p>
-        </ScrollReveal>
+        <div className="mt-4 text-[clamp(1rem,2.2vw,1.25rem)] font-bold text-[#216e63] leading-snug">
+          <TextReveal delay={0.3}>กินยาให้ถูก ไม่ต้องลุ้น ไม่ต้องจำคนเดียว</TextReveal>
+        </div>
 
         <ScrollReveal direction="left" delay={0.36}>
           <p className="mt-3 text-[clamp(0.85rem,1.4vw,1rem)] text-[#33413e] max-w-sm font-normal leading-[1.8]">

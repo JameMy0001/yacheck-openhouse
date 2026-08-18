@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { synth } from '../utils/audioSynth'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -8,6 +9,7 @@ export type SectionId = 'hero' | 'problem' | 'features' | 'agent' | 'database' |
 
 export function useScrollytelling(containerId = '#scroll-container') {
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollVelocity, setScrollVelocity] = useState(0)
   const [dangerMix, setDangerMix] = useState(0)
   const [explode, setExplode] = useState(0)
   const [cameraZ, setCameraZ] = useState(6.0)
@@ -25,6 +27,11 @@ export function useScrollytelling(containerId = '#scroll-container') {
     capsuleScale: 1.0,
     networkScale: 0.0,
   })
+
+  // Play a sound whenever section changes
+  useEffect(() => {
+    synth.playMilestoneBlip()
+  }, [currentSection])
 
   useEffect(() => {
     const sections: SectionId[] = [
@@ -57,6 +64,7 @@ export function useScrollytelling(containerId = '#scroll-container') {
         scrub: 1,
         onUpdate: (self) => {
           setScrollProgress(self.progress)
+          setScrollVelocity(self.getVelocity() / 1000) // normalized velocity
         },
       },
     })
@@ -195,6 +203,7 @@ export function useScrollytelling(containerId = '#scroll-container') {
 
   return {
     scrollProgress,
+    scrollVelocity,
     dangerMix,
     explode,
     cameraZ,

@@ -1,4 +1,5 @@
-import { ScrollReveal } from './ScrollReveal.tsx'
+import { ScrollReveal } from './ScrollReveal'
+import { TextReveal } from './TextReveal'
 import { AlertCircle, AlertTriangle } from 'lucide-react'
 
 export function ProblemSection() {
@@ -41,11 +42,10 @@ export function ProblemSection() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal direction="left" delay={0.12}>
-            <h2 className="text-[clamp(2.75rem,7vw,5rem)] font-black tracking-tight text-[#17211f] leading-none mb-3">
-              The Crisis<span className="text-[#b42318]">.</span>
-            </h2>
-          </ScrollReveal>
+          <h2 className="text-[clamp(2.75rem,7vw,5rem)] font-black tracking-tight text-[#17211f] leading-none mb-3">
+            <TextReveal>อันตรายจากยา</TextReveal>
+            <span className="text-[#b42318] block"><TextReveal delay={0.1}>ที่คุณมองไม่เห็น</TextReveal></span>
+          </h2>
 
           <ScrollReveal direction="left" delay={0.18}>
             <p className="text-[clamp(1.15rem,2.2vw,1.6rem)] font-bold text-[#b42318] leading-snug mb-4">

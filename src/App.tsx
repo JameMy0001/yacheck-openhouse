@@ -1,18 +1,18 @@
 import { Suspense, useState, useCallback } from 'react'
-import { Scene } from './components/3d/Scene.tsx'
-import { Navigation } from './components/ui/Navigation.tsx'
-import { DynamicBackground } from './components/ui/DynamicBackground.tsx'
-import { LoadingScreen } from './components/ui/LoadingScreen.tsx'
-import { HeroSection } from './components/ui/HeroSection.tsx'
-import { ProblemSection } from './components/ui/ProblemSection.tsx'
-import { FeaturesSection } from './components/ui/FeaturesSection.tsx'
-import { AgentSection } from './components/ui/AgentSection.tsx'
-import { DatabaseSection } from './components/ui/DatabaseSection.tsx'
-import { SpecsSection } from './components/ui/SpecsSection.tsx'
-import { CTASection } from './components/ui/CTASection.tsx'
-import { ErrorBoundary } from './components/common/ErrorBoundary.tsx'
-import { useScrollytelling } from './hooks/useScrollytelling.ts'
-import { ReadyContext } from './context/ReadyContext.tsx'
+import { Scene } from './components/3d/Scene'
+import { Navigation } from './components/ui/Navigation'
+import { DynamicBackground } from './components/ui/DynamicBackground'
+import { LoadingScreen } from './components/ui/LoadingScreen'
+import { HeroSection } from './components/ui/HeroSection'
+import { ProblemSection } from './components/ui/ProblemSection'
+import { FeaturesSection } from './components/ui/FeaturesSection'
+import { AgentSection } from './components/ui/AgentSection'
+import { DatabaseSection } from './components/ui/DatabaseSection'
+import { SpecsSection } from './components/ui/SpecsSection'
+import { CTASection } from './components/ui/CTASection'
+import { ErrorBoundary } from './components/common/ErrorBoundary'
+import { useScrollytelling } from './hooks/useScrollytelling'
+import { ReadyContext } from './context/ReadyContext'
 
 export default function App() {
   // isReady becomes true when LoadingScreen animation fully exits.
@@ -22,6 +22,7 @@ export default function App() {
 
   const {
     scrollProgress,
+    scrollVelocity,
     dangerMix,
     explode,
     cameraZ,
@@ -51,6 +52,7 @@ export default function App() {
             <Suspense fallback={null}>
               <Scene
                 scrollProgress={scrollProgress}
+                scrollVelocity={scrollVelocity}
                 dangerMix={dangerMix}
                 explodeProgress={explode}
                 cameraZ={cameraZ}

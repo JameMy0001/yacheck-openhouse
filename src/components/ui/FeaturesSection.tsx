@@ -1,5 +1,5 @@
 import { CalendarClock, Pill, Scan, ShieldAlert, Users, Sparkles } from 'lucide-react'
-import { ScrollReveal } from './ScrollReveal.tsx'
+import { ScrollReveal } from './ScrollReveal'
 
 export function FeaturesSection() {
   const features = [
