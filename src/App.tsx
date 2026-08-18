@@ -1,4 +1,5 @@
 import { Suspense, useState, useCallback } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { Scene } from './components/3d/Scene'
 import { Navigation } from './components/ui/Navigation'
 import { DynamicBackground } from './components/ui/DynamicBackground'
@@ -10,6 +11,7 @@ import { AgentSection } from './components/ui/AgentSection'
 import { DatabaseSection } from './components/ui/DatabaseSection'
 import { SpecsSection } from './components/ui/SpecsSection'
 import { CTASection } from './components/ui/CTASection'
+import { TeamSection } from './components/ui/TeamSection'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { useScrollytelling } from './hooks/useScrollytelling'
 import { ReadyContext } from './context/ReadyContext'
@@ -34,6 +36,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
+      <Analytics />
       <ReadyContext.Provider value={isReady}>
 
         {/* Splash Loading Animation — blocks until all 3D & visual assets ready */}
@@ -68,7 +71,7 @@ export default function App() {
             onNavigate={scrollToSection}
           />
 
-          {/* 7-Scene Scrollytelling Content */}
+          {/* Scrollytelling Content */}
           <main className="relative z-10 w-full pointer-events-none">
             <HeroSection onExploreClick={() => scrollToSection('problem')} />
             <ProblemSection />
@@ -77,6 +80,9 @@ export default function App() {
             <DatabaseSection />
             <SpecsSection />
             <CTASection />
+            <div className="pointer-events-auto">
+              <TeamSection />
+            </div>
           </main>
         </div>
 
