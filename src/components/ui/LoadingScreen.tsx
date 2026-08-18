@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
-export function LoadingScreen() {
+interface LoadingScreenProps {
+  /** Called when the exit animation has fully completed */
+  onComplete: () => void
+}
+
+export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [hidden, setHidden] = useState(false)
   const overlayRef = useRef<HTMLDivElement>(null)
   const logoMarkRef = useRef<HTMLDivElement>(null)
@@ -17,8 +22,10 @@ export function LoadingScreen() {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        // After animation, unmount
-        setTimeout(() => setHidden(true), 50)
+        // Notify parent that loading is done — ScrollReveal can now init
+        onComplete()
+        // Small delay before unmounting so opacity-0 is visible
+        setTimeout(() => setHidden(true), 100)
       },
     })
 
@@ -37,60 +44,40 @@ export function LoadingScreen() {
       opacity: 1,
       scale: 1,
       y: 0,
-      duration: 0.6,
+      duration: 0.55,
       ease: 'back.out(1.6)',
     })
 
-    // 2. Pill icon rotates to final angle, amber dot pops
-    tl.to(
-      pillIconRef.current,
-      { rotate: -45, duration: 0.45, ease: 'power2.out' },
-      '-=0.2'
-    )
-    tl.to(
-      dotRef.current,
-      { scale: 1, duration: 0.3, ease: 'back.out(2.5)' },
-      '-=0.25'
-    )
+    // 2. Pill icon rotates, amber dot pops
+    tl.to(pillIconRef.current, { rotate: -45, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+    tl.to(dotRef.current, { scale: 1, duration: 0.28, ease: 'back.out(2.5)' }, '-=0.22')
 
     // 3. WordMark slides up
-    tl.to(
-      wordMarkRef.current,
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-      '-=0.1'
-    )
+    tl.to(wordMarkRef.current, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, '-=0.1')
 
     // 4. Tagline fades in
-    tl.to(
-      taglineRef.current,
-      { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
-      '-=0.1'
-    )
+    tl.to(taglineRef.current, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.1')
 
-    // 5. Progress bar appears and fills
-    tl.to(
-      progressBarRef.current,
-      { opacity: 1, duration: 0.3 },
-      '-=0.1'
-    )
+    // 5. Progress bar fills — this represents actual asset loading time
+    tl.to(progressBarRef.current, { opacity: 1, duration: 0.25 }, '-=0.05')
     tl.to(progressFillRef.current, {
       width: '100%',
-      duration: 0.85,
+      duration: 1.2,
       ease: 'power1.inOut',
     })
 
-    // 6. Hold briefly
-    tl.to({}, { duration: 0.2 })
+    // 6. Hold
+    tl.to({}, { duration: 0.3 })
 
-    // 7. Fade out entire overlay
+    // 7. Fade out overlay — main site reveals
     tl.to(overlayRef.current, {
       opacity: 0,
-      duration: 0.55,
+      duration: 0.6,
       ease: 'power2.inOut',
     })
 
     return () => { tl.kill() }
-  }, [])
+  }, [onComplete])
 
   if (hidden) return null
 
@@ -99,34 +86,27 @@ export function LoadingScreen() {
       ref={overlayRef}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#f6f8f7] pointer-events-all select-none"
     >
-      {/* Logo Mark + WordMark stacked vertically */}
       <div className="flex flex-col items-center gap-5">
 
-        {/* Logo Icon — teal pill box */}
+        {/* Logo Icon */}
         <div
           ref={logoMarkRef}
           className="relative flex items-center justify-center w-20 h-20 rounded-[22px] bg-[#216e63] shadow-2xl shadow-[#216e63]/30"
         >
-          {/* Pill SVG */}
           <svg
             ref={pillIconRef}
-            width="38"
-            height="38"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Pill icon: two half-capsule rectangles with a center line */}
-            <rect x="4.5" y="10.5" width="15" height="3" rx="1.5" />
-            <rect x="2" y="6" width="8" height="12" rx="4" />
-            <rect x="14" y="6" width="8" height="12" rx="4" />
-            <line x1="10" y1="12" x2="14" y2="12" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" />
+            {/* Pill capsule shape */}
+            <rect x="2" y="7" width="8.5" height="10" rx="4.25" fill="white" opacity="0.9" />
+            <rect x="13.5" y="7" width="8.5" height="10" rx="4.25" fill="white" opacity="0.6" />
+            <line x1="10.5" y1="12" x2="13.5" y2="12" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
           </svg>
 
-          {/* Amber Dot — bottom-right corner */}
           <span
             ref={dotRef}
             className="absolute bottom-1.5 right-1.5 w-3.5 h-3.5 rounded-full bg-[#f2a65a] border-2 border-[#f6f8f7]"
@@ -140,7 +120,7 @@ export function LoadingScreen() {
           </span>
           <p
             ref={taglineRef}
-            className="text-[0.78rem] font-mono font-bold tracking-widest uppercase text-[#216e63] mt-1"
+            className="text-[0.78rem] font-mono font-bold tracking-widest uppercase text-[#216e63] mt-0.5"
           >
             Medication Safety
           </p>
@@ -152,13 +132,9 @@ export function LoadingScreen() {
         ref={progressBarRef}
         className="absolute bottom-16 w-36 h-[3px] rounded-full bg-[#dde5e2] overflow-hidden"
       >
-        <div
-          ref={progressFillRef}
-          className="h-full w-0 rounded-full bg-[#216e63]"
-        />
+        <div ref={progressFillRef} className="h-full w-0 rounded-full bg-[#216e63]" />
       </div>
 
-      {/* Subtle corner label */}
       <div className="absolute bottom-6 text-[10px] font-mono text-[#64716e] tracking-widest">
         OPENHOUSE 2026
       </div>

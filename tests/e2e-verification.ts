@@ -17,7 +17,6 @@ const RESET = '\x1b[0m'
 const BOLD = '\x1b[1m'
 const RED = '\x1b[31m'
 const GREEN = '\x1b[32m'
-const _YELLOW = '\x1b[33m'
 const BLUE = '\x1b[34m'
 const CYAN = '\x1b[36m'
 const GRAY = '\x1b[90m'
@@ -459,10 +458,10 @@ runTest('T4.1', 4, 'Scene 1 (Hero): YaCheck Brand Header, Thai Tagline & Scroll 
   if (!/YaCheck/m.test(combined)) {
     throw new Error('Scene 1 missing brand title "YaCheck".')
   }
-  if (!/แอปพลิเคชันผู้ช่วยจัดการและแจ้งเตือนการทานยาอัจฉริยะ/m.test(combined) && !/ผู้ช่วยจัดการและแจ้งเตือนการทานยา/m.test(combined)) {
+  if (!/เพื่อนคู่คิดเรื่องยาประจำบ้าน/m.test(combined) && !/กินยาให้ถูก ไม่ต้องลุ้น/m.test(combined)) {
     throw new Error('Scene 1 missing authentic Thai tagline copy.')
   }
-  if (!/scroll/i.test(combined)) {
+  if (!/เลื่อนลงเพื่อดูต่อ/i.test(combined) && !/scroll/i.test(combined)) {
     throw new Error('Scene 1 missing scroll exploration indicator.')
   }
 
@@ -473,13 +472,13 @@ runTest('T4.1', 4, 'Scene 1 (Hero): YaCheck Brand Header, Thai Tagline & Scroll 
 runTest('T4.2', 4, 'Scene 2 (Problem): Medication Crisis Headline & Risk Analysis Copy', () => {
   const { combined } = getAllSourceContent()
 
-  if (!/ยาตีกัน/m.test(combined)) {
-    throw new Error('Scene 2 missing medication conflict headline "ยาตีกัน".')
+  if (!/The Crisis/m.test(combined)) {
+    throw new Error('Scene 2 missing medication conflict headline "The Crisis".')
   }
-  if (!/อันตรายกว่าที่คิด/m.test(combined)) {
-    throw new Error('Scene 2 missing danger warning "อันตรายกว่าที่คิด".')
+  if (!/แค่กินยาไม่ตรงกัน/m.test(combined)) {
+    throw new Error('Scene 2 missing danger warning.')
   }
-  if (!/ปฏิกิริยาระหว่างยา/m.test(combined) && !/แจ้งเตือนความเสี่ยง/m.test(combined) && !/การทานยาหลายชนิด/m.test(combined)) {
+  if (!/ทำร้ายร่างกายโดยที่เราไม่รู้ตัว/m.test(combined) && !/เข้าโรงพยาบาลจากผลข้างเคียง/m.test(combined)) {
     throw new Error('Scene 2 missing detailed risk analysis explanation copy.')
   }
 
@@ -487,20 +486,23 @@ runTest('T4.2', 4, 'Scene 2 (Problem): Medication Crisis Headline & Risk Analysi
 })
 
 // T4.3: Solutions Scene Feature Showcase
-runTest('T4.3', 4, 'Scene 3 (Solutions): AI Scanner, Smart Reminder, Caregiver Link Features', () => {
+runTest('T4.3', 4, 'Scene 3 (Solutions): Core Features Showcase', () => {
   const { combined } = getAllSourceContent()
 
-  if (!/AI Scanner/m.test(combined)) {
-    throw new Error('Scene 3 missing "AI Scanner" feature card.')
+  if (!/Core Features/m.test(combined)) {
+    throw new Error('Scene 3 missing "Core Features" header.')
   }
-  if (!/Smart Reminder/m.test(combined)) {
-    throw new Error('Scene 3 missing "Smart Reminder" feature card.')
+  if (!/ตารางยาวันนี้/m.test(combined)) {
+    throw new Error('Scene 3 missing Schedule feature card.')
   }
-  if (!/Caregiver Link/m.test(combined)) {
-    throw new Error('Scene 3 missing "Caregiver Link" feature card.')
+  if (!/สแกน QR Code/m.test(combined)) {
+    throw new Error('Scene 3 missing Scanner feature card.')
+  }
+  if (!/ส่งต่อความห่วงใยให้ครอบครัว/m.test(combined)) {
+    throw new Error('Scene 3 missing Family Link feature card.')
   }
 
-  return { details: 'Solutions scene 3-feature AI showcase verified.' }
+  return { details: 'Solutions scene features verified.' }
 })
 
 // T4.4: Specs Scene Technical Architecture
@@ -527,17 +529,17 @@ runTest('T4.4', 4, 'Scene 4 (Specs): "Under the Hood" Tech Stack (Expo, Local DB
 })
 
 // T4.5: CTA Scene Conversion & Action
-runTest('T4.5', 4, 'Scene 5 (CTA): OpenHouse Booth C-04 & Interactive Download Action', () => {
+runTest('T4.5', 4, 'Scene 5 (CTA): OpenHouse Booth & Interactive Download Action', () => {
   const { combined } = getAllSourceContent()
 
-  if (!/C-04/m.test(combined)) {
-    throw new Error('Scene 5 missing OpenHouse booth designation "C-04".')
+  if (!/OpenHouse/m.test(combined)) {
+    throw new Error('Scene 5 missing OpenHouse booth designation.')
   }
-  if (!/สแกนดาวน์โหลด/m.test(combined) && !/ดาวน์โหลด/m.test(combined) && !/Download/i.test(combined)) {
+  if (!/สแกนดาวน์โหลด/m.test(combined) && !/ดาวน์โหลดสำหรับ Android/m.test(combined) && !/Download/i.test(combined)) {
     throw new Error('Scene 5 missing download call-to-action button text.')
   }
 
-  return { details: 'CTA scene booth C-04 badge and conversion button verified.' }
+  return { details: 'CTA scene booth badge and conversion button verified.' }
 })
 
 // ============================================================================

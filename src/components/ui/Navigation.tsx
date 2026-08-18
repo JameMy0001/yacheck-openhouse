@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Pill, Volume2, VolumeX, Sparkles, Activity, ShieldAlert, Cpu, Download, Menu, X } from 'lucide-react'
+import { Pill, Volume2, VolumeX, Sparkles, Activity, ShieldAlert, Cpu, Download, Menu, X, BrainCircuit, Database } from 'lucide-react'
 
 export interface NavigationProps {
   currentSection?: string
@@ -66,6 +66,8 @@ export function Navigation({ currentSection = 'hero', onNavigate }: NavigationPr
     { id: 'hero', label: 'Overview', icon: Pill },
     { id: 'problem', label: 'Problem', icon: ShieldAlert },
     { id: 'features', label: 'Features', icon: Sparkles },
+    { id: 'agent', label: 'AI Agent', icon: BrainCircuit },
+    { id: 'database', label: 'Clinical DB', icon: Database },
     { id: 'specs', label: 'Tech Stack', icon: Cpu },
     { id: 'cta', label: 'Get App', icon: Download },
   ]

@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { Environment, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 import { MedicalCapsuleStudio } from './MedicalCapsuleStudio.tsx'
+import { DataNetwork } from './DataNetwork.tsx'
 import { ErrorBoundary } from '../common/ErrorBoundary.tsx'
 
 export interface SceneProps {
@@ -12,6 +13,8 @@ export interface SceneProps {
   explodeProgress?: number
   cameraZ?: number
   cameraY?: number
+  capsuleScale?: number
+  networkScale?: number
   className?: string
 }
 
@@ -76,6 +79,8 @@ export function Scene({
   explodeProgress = 0,
   cameraZ = 5.8,
   cameraY = 0.0,
+  capsuleScale = 1.0,
+  networkScale = 0.0,
   className = 'w-full h-full',
 }: SceneProps) {
   return (
@@ -101,11 +106,20 @@ export function Scene({
             <Environment preset="city" />
 
             {/* Medical Tech 3D Centerpiece */}
-            <MedicalCapsuleStudio
-              explodeProgress={explodeProgress}
-              scrollProgress={scrollProgress}
-              dangerMix={dangerMix}
-            />
+            {capsuleScale > 0.01 && (
+              <group scale={capsuleScale}>
+                <MedicalCapsuleStudio
+                  explodeProgress={explodeProgress}
+                  scrollProgress={scrollProgress}
+                  dangerMix={dangerMix}
+                />
+              </group>
+            )}
+
+            {/* 3D Data Network & Workflow (Appears later) */}
+            {networkScale > 0.01 && (
+               <DataNetwork />
+            )}
 
             {/* Soft Studio Floor Contact Shadow */}
             <ContactShadows

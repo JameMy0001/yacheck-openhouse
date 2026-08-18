@@ -1,0 +1,6 @@
+*.apk
+YaCheck.apk
+.agents/
+tests/
+tools/
+*.md

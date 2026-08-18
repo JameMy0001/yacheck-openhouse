@@ -16,7 +16,6 @@ const RESET = '\x1b[0m'
 const BOLD = '\x1b[1m'
 const RED = '\x1b[31m'
 const GREEN = '\x1b[32m'
-const YELLOW = '\x1b[33m'
 const BLUE = '\x1b[34m'
 const CYAN = '\x1b[36m'
 const GRAY = '\x1b[90m'
@@ -383,7 +382,6 @@ runStress('S3.1', 'FPS & Animation Benchmark', 'Continuous Render Loop Simulatio
 
   // 1. Initialize buffers
   const posArray = new Float32Array(PARTICLE_COUNT * 3)
-  const colArray = new Float32Array(PARTICLE_COUNT * 3)
   const lineArray = new Float32Array(MAX_CONNECTIONS * 2 * 3)
 
   const initialParticleData = []
@@ -411,7 +409,6 @@ runStress('S3.1', 'FPS & Animation Benchmark', 'Continuous Render Loop Simulatio
   }
 
   const frameTimes: number[] = []
-  let dangerMix = 0
   let explodeProgress = 0
 
   const benchStart = performance.now()
@@ -419,11 +416,11 @@ runStress('S3.1', 'FPS & Animation Benchmark', 'Continuous Render Loop Simulatio
   for (let f = 0; f < FRAMES; f++) {
     const frameStart = performance.now()
     const t = f * 0.016 // 60 FPS delta
-    const delta = 0.016
 
     // Scrollytelling cycle modulation: 0 -> 1 -> 0 over 3000 frames
     const cycle = (f % 600) / 600
-    dangerMix = cycle > 0.2 && cycle < 0.6 ? 1.0 : 0.0
+    const _dangerMixValue = cycle > 0.2 && cycle < 0.6 ? 1.0 : 0.0
+    void _dangerMixValue
     explodeProgress = Math.sin(cycle * Math.PI)
 
     // 1. Particle field physics & wrapping
@@ -517,18 +514,16 @@ runStress('S3.1', 'FPS & Animation Benchmark', 'Continuous Render Loop Simulatio
 runStress('S3.2', 'FPS & Animation Benchmark', 'High-Frequency GSAP Scroll Scrubbing Stress Test', () => {
   // Simulate hyper-fast scrolling from top to bottom and back 500 times
   const SCRUB_CYCLES = 500
-  let stateProgress = 0
   let stateDanger = 0
   let stateExplode = 0
   let stateCamZ = 6.0
-  let stateCamY = 0.0
 
   const scrubStart = performance.now()
 
   for (let s = 0; s < SCRUB_CYCLES; s++) {
     // Generate rapid zig-zag scroll progress
     const p = (s % 100) / 100
-    stateProgress = p
+    void p
 
     // Interpolate GSAP timeline values at milestone p
     if (p <= 0.25) {
@@ -536,25 +531,21 @@ runStress('S3.2', 'FPS & Animation Benchmark', 'High-Frequency GSAP Scroll Scrub
       stateDanger = sub * 1.0
       stateExplode = sub * 0.25
       stateCamZ = 6.0 + sub * (5.2 - 6.0)
-      stateCamY = 0.0 + sub * (-0.2 - 0.0)
     } else if (p <= 0.5) {
       const sub = (p - 0.25) / 0.25
       stateDanger = 1.0 + sub * (0.15 - 1.0)
       stateExplode = 0.25 + sub * (0.95 - 0.25)
       stateCamZ = 5.2 + sub * (6.6 - 5.2)
-      stateCamY = -0.2 + sub * (0.3 - (-0.2))
     } else if (p <= 0.75) {
       const sub = (p - 0.5) / 0.25
       stateDanger = 0.15 + sub * (0.0 - 0.15)
       stateExplode = 0.95 + sub * (0.35 - 0.95)
       stateCamZ = 6.6 + sub * (5.8 - 6.6)
-      stateCamY = 0.3 + sub * (0.0 - 0.3)
     } else {
       const sub = (p - 0.75) / 0.25
       stateDanger = 0.0
       stateExplode = 0.35 + sub * (0.0 - 0.35)
       stateCamZ = 5.8 + sub * (6.2 - 5.8)
-      stateCamY = 0.0
     }
 
     if (!Number.isFinite(stateCamZ) || Number.isNaN(stateDanger) || Number.isNaN(stateExplode)) {
@@ -581,8 +572,12 @@ runStress('S3.2', 'FPS & Animation Benchmark', 'High-Frequency GSAP Scroll Scrub
 console.log(`\n${BOLD}${BLUE}--- SUITE 4: Memory Allocation & Sustained Execution Leak Audit ---${RESET}`)
 
 runStress('S4.1', 'Memory & Leak Audit', 'Sustained 5,000 Frame Heap Allocation & Memory Drift Audit', () => {
+  const globalWithGc = globalThis as typeof globalThis & { gc?: () => void }
+
   // Force garbage collection if available or baseline measurement
-  if (global.gc) global.gc()
+  if (typeof globalWithGc.gc === 'function') {
+    globalWithGc.gc()
+  }
   const initialHeap = process.memoryUsage().heapUsed
 
   const ITERATIONS = 5000
@@ -600,7 +595,9 @@ runStress('S4.1', 'Memory & Leak Audit', 'Sustained 5,000 Frame Heap Allocation 
     dummy.updateMatrix()
   }
 
-  if (global.gc) global.gc()
+  if (typeof globalWithGc.gc === 'function') {
+    globalWithGc.gc()
+  }
   const finalHeap = process.memoryUsage().heapUsed
   const heapDeltaMB = (finalHeap - initialHeap) / (1024 * 1024)
 

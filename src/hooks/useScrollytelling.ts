@@ -4,14 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export interface ScrollytellingState {
-  progress: number
-  dangerMix: number
-  explode: number
-  cameraZ: number
-  cameraY: number
-  currentSection: 'hero' | 'problem' | 'features' | 'specs' | 'cta'
-}
+export type SectionId = 'hero' | 'problem' | 'features' | 'agent' | 'database' | 'specs' | 'cta'
 
 export function useScrollytelling(containerId = '#scroll-container') {
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -19,7 +12,9 @@ export function useScrollytelling(containerId = '#scroll-container') {
   const [explode, setExplode] = useState(0)
   const [cameraZ, setCameraZ] = useState(6.0)
   const [cameraY, setCameraY] = useState(0.0)
-  const [currentSection, setCurrentSection] = useState<'hero' | 'problem' | 'features' | 'specs' | 'cta'>('hero')
+  const [capsuleScale, setCapsuleScale] = useState(1.0)
+  const [networkScale, setNetworkScale] = useState(0.0)
+  const [currentSection, setCurrentSection] = useState<SectionId>('hero')
 
   const animStateRef = useRef({
     progress: 0,
@@ -27,16 +22,32 @@ export function useScrollytelling(containerId = '#scroll-container') {
     explode: 0,
     cameraZ: 6.0,
     cameraY: 0.0,
+    capsuleScale: 1.0,
+    networkScale: 0.0,
   })
 
   useEffect(() => {
-    const sections: Array<'hero' | 'problem' | 'features' | 'specs' | 'cta'> = [
+    const sections: SectionId[] = [
       'hero',
       'problem',
       'features',
+      'agent',
+      'database',
       'specs',
       'cta',
     ]
+
+    const triggers = sections.map((id) => {
+      const el = document.getElementById(id)
+      if (!el) return null
+      return ScrollTrigger.create({
+        trigger: el,
+        start: 'top 50%',
+        end: 'bottom 50%',
+        onEnter: () => setCurrentSection(id),
+        onEnterBack: () => setCurrentSection(id),
+      })
+    })
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -45,18 +56,20 @@ export function useScrollytelling(containerId = '#scroll-container') {
         end: 'bottom bottom',
         scrub: 1,
         onUpdate: (self) => {
-          const p = self.progress
-          setScrollProgress(p)
-
-          // Determine current active section based on progress
-          const index = Math.min(Math.floor(p * 5), 4)
-          setCurrentSection(sections[index])
+          setScrollProgress(self.progress)
         },
       },
     })
 
-    // GSAP ScrollTrigger timeline binding across 5 scene milestones (0%, 25%, 50%, 75%, 100%)
-    // Bound to: camera.position, capsule explode distance, shader dangerMix uniform, and progress
+    const syncState = () => {
+      setDangerMix(animStateRef.current.dangerMix)
+      setExplode(animStateRef.current.explode)
+      setCameraZ(animStateRef.current.cameraZ)
+      setCameraY(animStateRef.current.cameraY)
+      setCapsuleScale(animStateRef.current.capsuleScale)
+      setNetworkScale(animStateRef.current.networkScale)
+    }
+
     tl.to(
       animStateRef.current,
       {
@@ -65,96 +78,111 @@ export function useScrollytelling(containerId = '#scroll-container') {
         explode: 0.0,
         cameraZ: 6.0,
         cameraY: 0.0,
-        duration: 0.25,
-        onUpdate: () => {
-          setDangerMix(animStateRef.current.dangerMix)
-          setExplode(animStateRef.current.explode)
-          setCameraZ(animStateRef.current.cameraZ)
-          setCameraY(animStateRef.current.cameraY)
-        },
+        capsuleScale: 1.0,
+        networkScale: 0.0,
+        duration: 0.15,
+        onUpdate: syncState,
       },
       0.0
     )
-      // Scene 2 (Problem): Medication conflict crisis, red dangerMix, closer camera zoom
+      // Scene 2 (Problem): Medication conflict crisis, red dangerMix
       .to(
         animStateRef.current,
         {
-          progress: 0.25,
           dangerMix: 1.0,
-          explode: 0.25,
-          cameraZ: 5.2,
-          cameraY: -0.2,
-          duration: 0.25,
-          onUpdate: () => {
-            setDangerMix(animStateRef.current.dangerMix)
-            setExplode(animStateRef.current.explode)
-            setCameraZ(animStateRef.current.cameraZ)
-            setCameraY(animStateRef.current.cameraY)
-          },
+          explode: 0.2,
+          cameraZ: 5.4,
+          cameraY: -0.15,
+          capsuleScale: 1.0,
+          networkScale: 0.0,
+          duration: 0.15,
+          onUpdate: syncState,
         },
-        0.25
+        0.16
       )
-      // Scene 3 (Features): AI Scanning & exploded view of active nano-pellets
+      // Scene 3 (Features): 5 Core Pillars, exploding nano-nodes
       .to(
         animStateRef.current,
         {
-          progress: 0.5,
-          dangerMix: 0.15,
-          explode: 0.95,
-          cameraZ: 6.6,
-          cameraY: 0.3,
-          duration: 0.25,
-          onUpdate: () => {
-            setDangerMix(animStateRef.current.dangerMix)
-            setExplode(animStateRef.current.explode)
-            setCameraZ(animStateRef.current.cameraZ)
-            setCameraY(animStateRef.current.cameraY)
-          },
+          dangerMix: 0.1,
+          explode: 0.85,
+          cameraZ: 6.5,
+          cameraY: 0.25,
+          capsuleScale: 1.0,
+          networkScale: 0.0,
+          duration: 0.15,
+          onUpdate: syncState,
+        },
+        0.33
+      )
+      // Scene 4 (Agent): Supervisor Architecture, glowing core focus
+      // TRANSITION: Capsule explodes and scales down to 0, Network scales up to 1
+      .to(
+        animStateRef.current,
+        {
+          dangerMix: 0.0,
+          explode: 1.5,
+          cameraZ: 5.8,
+          cameraY: 0.0,
+          capsuleScale: 0.0,
+          networkScale: 1.0,
+          duration: 0.15,
+          onUpdate: syncState,
         },
         0.5
       )
-      // Scene 4 (Specs): Tech Architecture, sleek compact view
+      // Scene 5 (Database): Clinical Catalogue & Evidence
+      // Network expands and rotates
       .to(
         animStateRef.current,
         {
-          progress: 0.75,
           dangerMix: 0.0,
-          explode: 0.35,
-          cameraZ: 5.8,
-          cameraY: 0.0,
-          duration: 0.25,
-          onUpdate: () => {
-            setDangerMix(animStateRef.current.dangerMix)
-            setExplode(animStateRef.current.explode)
-            setCameraZ(animStateRef.current.cameraZ)
-            setCameraY(animStateRef.current.cameraY)
-          },
+          explode: 0.0,
+          cameraZ: 6.2,
+          cameraY: 0.1,
+          capsuleScale: 0.0,
+          networkScale: 1.5,
+          duration: 0.15,
+          onUpdate: syncState,
         },
-        0.75
+        0.66
       )
-      // Scene 5 (CTA): OpenHouse Booth Showcase
+      // Scene 6 (Specs): Tech Architecture
+      // Camera flies *through* the network (Network scales up aggressively to wrap camera)
       .to(
         animStateRef.current,
         {
-          progress: 1.0,
+          dangerMix: 0.0,
+          explode: 0.0,
+          cameraZ: 4.0,
+          cameraY: 0.0,
+          capsuleScale: 0.0,
+          networkScale: 3.5,
+          duration: 0.15,
+          onUpdate: syncState,
+        },
+        0.83
+      )
+      // Scene 7 (CTA): Download & OpenHouse
+      // Network normalizes in background
+      .to(
+        animStateRef.current,
+        {
           dangerMix: 0.0,
           explode: 0.0,
           cameraZ: 6.2,
           cameraY: 0.0,
-          duration: 0.25,
-          onUpdate: () => {
-            setDangerMix(animStateRef.current.dangerMix)
-            setExplode(animStateRef.current.explode)
-            setCameraZ(animStateRef.current.cameraZ)
-            setCameraY(animStateRef.current.cameraY)
-          },
+          capsuleScale: 0.0,
+          networkScale: 1.2,
+          duration: 0.15,
+          onUpdate: syncState,
         },
         1.0
       )
 
     return () => {
+      triggers.forEach((t) => t?.kill())
       tl.kill()
-      ScrollTrigger.getAll().forEach((t) => t.kill())
     }
   }, [containerId])
 
@@ -171,6 +199,8 @@ export function useScrollytelling(containerId = '#scroll-container') {
     explode,
     cameraZ,
     cameraY,
+    capsuleScale,
+    networkScale,
     currentSection,
     scrollToSection,
   }
