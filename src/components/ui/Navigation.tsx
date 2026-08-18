@@ -160,8 +160,8 @@ export function Navigation({ currentSection = 'hero', onNavigate }: NavigationPr
             onClick={() => handleNavClick('cta')}
             className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#216e63] hover:bg-[#174e47] text-white text-xs font-bold shadow-md shadow-[#216e63]/20 hover:shadow-lg transition-all cursor-pointer"
           >
-            <Activity className="w-3.5 h-3.5" />
-            <span>ลองใช้งาน</span>
+            <Activity className="w-4 h-4" />
+            <span className="text-sm">Try</span>
           </button>
 
           {/* Mobile Hamburger Toggle */}
