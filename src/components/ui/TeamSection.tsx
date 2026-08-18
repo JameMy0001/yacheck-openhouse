@@ -51,23 +51,39 @@ export function TeamSection() {
           </ScrollReveal>
         </div>
 
-        {/* Right Column: Members */}
-        <div className="flex-[1.5] grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
-          {team.map((member, i) => (
-            <ScrollReveal key={i} direction="up" distance={20} delay={0.1 * i} className="group cursor-default">
-              <div className="flex flex-col border-l-2 border-gray-100 pl-6 py-2 group-hover:border-[#00F2FE] transition-colors duration-500">
-                <div className="text-[#216e63] font-bold text-lg mb-1 group-hover:text-[#00F2FE] transition-colors duration-300 font-prompt">
-                  {member.nameTH}
-                  <span className="ml-2 text-xs font-normal text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
-                    {member.nickname}
-                  </span>
+        {/* Right Column: Members & Advisor */}
+        <div className="flex-[1.5] flex flex-col gap-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+            {team.map((member, i) => (
+              <ScrollReveal key={i} direction="up" distance={20} delay={0.1 * i} className="group cursor-default">
+                <div className="flex flex-col border-l-2 border-gray-100 pl-6 py-2 group-hover:border-[#00F2FE] transition-colors duration-500">
+                  <div className="text-[#216e63] font-bold text-lg mb-1 group-hover:text-[#00F2FE] transition-colors duration-300 font-prompt">
+                    {member.nameTH}
+                    <span className="ml-2 text-xs font-normal text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                      {member.nickname}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
+                    {member.nameEN}
+                  </div>
                 </div>
-                <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
-                  {member.nameEN}
-                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal direction="up" distance={20} delay={0.4} className="group cursor-default mt-4 border-t border-gray-100 pt-8">
+            <div className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#f2a65a] uppercase mb-4">
+              Project Advisor
+            </div>
+            <div className="flex flex-col border-l-2 border-[#f2a65a]/30 pl-6 py-2 group-hover:border-[#f2a65a] transition-colors duration-500">
+              <div className="text-[#17211f] font-bold text-lg mb-1 font-prompt">
+                ดร.ศุภรัตน์ แย้มครวญ
               </div>
-            </ScrollReveal>
-          ))}
+              <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
+                Dr. Suparat Yeamkuan
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
 
       </div>
