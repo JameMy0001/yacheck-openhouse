@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { Environment, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
@@ -94,14 +94,23 @@ export function Scene({
   networkScale = 0.0,
   className = 'w-full h-full',
 }: SceneProps) {
+  // Performance optimization hook
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <ErrorBoundary>
       <div className={`relative ${className}`}>
         <Canvas
           camera={{ position: [0, 0, 5.8], fov: 42, near: 0.1, far: 100 }}
-          dpr={[1, 2]}
+          dpr={isMobile ? [1, 1.5] : [1, 2]}
           gl={{
-            antialias: true,
+            antialias: !isMobile, // Disable antialiasing on mobile to save performance
             alpha: true,
             powerPreference: 'high-performance',
             toneMapping: THREE.ACESFilmicToneMapping,
@@ -132,17 +141,20 @@ export function Scene({
                <DataNetwork />
             )}
 
-            {/* Soft Studio Floor Contact Shadow */}
+            {/* Soft Studio Floor Contact Shadow - Lower resolution on mobile */}
             <ContactShadows
               position={[0, -2.2, 0]}
               opacity={0.3}
               scale={10}
               blur={2.4}
               far={4}
+              resolution={isMobile ? 256 : 512}
+              frames={1} // Only render shadow once instead of every frame to save massive performance
               color="#0f172a"
             />
             
-            <PostProcessEffects />
+            {/* Disable post-processing entirely on mobile for smooth scrolling */}
+            {!isMobile && <PostProcessEffects />}
           </Suspense>
         </Canvas>
       </div>
