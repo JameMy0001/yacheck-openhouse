@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { MapPin, Sparkles, Check, Heart, Smartphone, Wrench } from 'lucide-react'
+import { MiniCapsuleCanvas } from '../3d/MiniCapsuleCanvas'
 
 export function CTASection() {
   const [downloadStarted, setDownloadStarted] = useState(false)
@@ -54,17 +55,12 @@ export function CTASection() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 w-full max-w-2xl my-4">
           <div className="flex flex-col items-center gap-2.5">
-            <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl bg-white p-3 border-2 border-[#dde5e2] shadow-md overflow-hidden">
-              <img
-                src="/qr-android.png"
-                alt="QR Code ดาวน์โหลด YaCheck APK"
-                className="w-full h-full object-contain"
-                draggable={false}
-              />
+            <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl bg-white p-2 border-2 border-[#dde5e2] shadow-md overflow-hidden relative">
+              <MiniCapsuleCanvas />
             </div>
             <span className="text-xs font-mono font-bold text-[#216e63] flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#f2a65a]" />
-              สแกน QR เพื่อดาวน์โหลด APK
+              เตรียมพบกับ QR Code เร็วๆ นี้
             </span>
           </div>
 
