@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { MapPin, Sparkles, Check, Heart, Smartphone, Wrench } from 'lucide-react'
+import { MapPin, Check, Heart, Smartphone, Wrench } from 'lucide-react'
 import { MiniCapsuleCanvas } from '../3d/MiniCapsuleCanvas'
 
 export function CTASection() {
@@ -58,10 +58,6 @@ export function CTASection() {
             <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-2xl bg-white p-2 border-2 border-[#dde5e2] shadow-md overflow-hidden relative">
               <MiniCapsuleCanvas />
             </div>
-            <span className="text-xs font-mono font-bold text-[#216e63] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#f2a65a]" />
-              เตรียมพบกับ QR Code เร็วๆ นี้
-            </span>
           </div>
 
           <div className="flex flex-col gap-3 w-full sm:w-72">
@@ -107,10 +103,6 @@ export function CTASection() {
             </div>
           </div>
         </div>
-
-        <p className="text-[11px] font-mono text-[#64716e] mt-2">
-          ไฟล์ติดตั้ง APK · ขนาด 132 MB · เปิดการอนุญาต "ติดตั้งแอปจากแหล่งที่ไม่รู้จัก" บนมือถือ
-        </p>
 
         <div className="mt-8 pt-6 border-t border-[#dde5e2] w-full flex flex-col sm:flex-row items-center justify-between text-xs text-[#4a5855] font-mono gap-3">
           <div className="flex items-center gap-2">
