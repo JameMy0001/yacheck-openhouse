@@ -16,7 +16,7 @@ export function CTASection() {
     }
   }, [])
 
-  const APK_URL = 'https://drive.google.com/file/d/1z0clSsGNCBE8f9T7MEvF8SvpycJzRvOM/view?usp=sharing'
+  const APK_URL = 'https://drive.google.com/file/d/1t9QoarVYsCo_nM3EoB7Fa6xiK2nKT9FR/view?usp=sharing'
 
   const handleAndroidDownload = () => {
     setDownloadStarted(true)
