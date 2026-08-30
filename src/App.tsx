@@ -1,4 +1,4 @@
-import { Suspense, useState, useCallback } from 'react'
+import { Suspense, useState, useCallback, useEffect } from 'react'
 import { Analytics } from '@vercel/analytics/react'
 import { Scene } from './components/3d/Scene'
 import { Navigation } from './components/ui/Navigation'
@@ -17,10 +17,15 @@ import { useScrollytelling } from './hooks/useScrollytelling'
 import { ReadyContext } from './context/ReadyContext'
 
 export default function App() {
-  // isReady becomes true when LoadingScreen animation fully exits.
-  // ScrollReveal listens via ReadyContext and only then creates ScrollTriggers.
+  const [isLoopMode, setIsLoopMode] = useState(false)
   const [isReady, setIsReady] = useState(false)
   const handleLoadingComplete = useCallback(() => setIsReady(true), [])
+
+  useEffect(() => {
+    if (window.location.search.includes('loop=true')) {
+      setIsLoopMode(true)
+    }
+  }, [])
 
   const {
     scrollProgress,
@@ -33,6 +38,36 @@ export default function App() {
     currentSection,
     scrollToSection,
   } = useScrollytelling('#scroll-container')
+
+  if (isLoopMode) {
+    return (
+      <div className="w-screen h-screen bg-gradient-to-b from-[#f6f8f7] to-[#e5f4f0] flex flex-col items-center justify-center overflow-hidden">
+        <div className="absolute top-10 flex items-center justify-center gap-3 z-50">
+          <div className="w-10 h-10 rounded-xl bg-[#216e63] flex items-center justify-center">
+            <span className="text-white font-bold text-xl">Y</span>
+          </div>
+          <span className="text-2xl font-black tracking-tight text-[#17211f]">
+            YaCheck<span className="text-[#216e63]">.</span>
+          </span>
+        </div>
+        <div className="w-full h-full">
+          <Scene
+            scrollProgress={0}
+            dangerMix={0}
+            explodeProgress={0}
+            cameraZ={5.5}
+            cameraY={0}
+            capsuleScale={1}
+            networkScale={0}
+            autoSpin={true}
+          />
+        </div>
+        <div className="absolute bottom-10 text-[#216e63] font-mono text-sm tracking-widest font-bold">
+          AI MEDICATION SAFETY
+        </div>
+      </div>
+    )
+  }
 
   return (
     <ErrorBoundary>

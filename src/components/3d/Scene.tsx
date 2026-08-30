@@ -18,6 +18,7 @@ export interface SceneProps {
   capsuleScale?: number
   networkScale?: number
   className?: string
+  autoSpin?: boolean
 }
 
 function PostProcessEffects() {
@@ -93,6 +94,7 @@ export function Scene({
   capsuleScale = 1.0,
   networkScale = 0.0,
   className = 'w-full h-full',
+  autoSpin = false,
 }: SceneProps) {
   // Performance optimization hook
   const [isMobile, setIsMobile] = useState(false)
@@ -132,6 +134,7 @@ export function Scene({
                   explodeProgress={explodeProgress}
                   scrollProgress={scrollProgress}
                   dangerMix={dangerMix}
+                  autoSpin={autoSpin}
                 />
               </group>
             )}

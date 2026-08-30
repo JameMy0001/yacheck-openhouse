@@ -6,6 +6,7 @@ export interface MedicalCapsuleStudioProps {
   explodeProgress?: number
   scrollProgress?: number
   dangerMix?: number
+  autoSpin?: boolean
 }
 
 const COLOR_TEAL = new THREE.Color('#216e63') // Official YaCheck Primary Teal
@@ -16,6 +17,7 @@ export function MedicalCapsuleStudio({
   explodeProgress = 0,
   scrollProgress = 0,
   dangerMix = 0,
+  autoSpin = false,
 }: MedicalCapsuleStudioProps) {
   const masterGroupRef = useRef<THREE.Group>(null)
   const topShellGroupRef = useRef<THREE.Group>(null)
@@ -150,29 +152,35 @@ export function MedicalCapsuleStudio({
 
     // Master orientation: smooth scroll rotation + interactive pointer tilt (Locked when idle)
     if (masterGroupRef.current) {
-      // Scrollytelling progressive rotation directly tied to scroll
-      const targetRotX = Math.sin(scrollProgress * Math.PI * 1.5) * 0.35 + pointer.y * 0.15
-      const targetRotY = scrollProgress * Math.PI * 2.5 + pointer.x * 0.25
-      const targetRotZ = Math.sin(scrollProgress * Math.PI) * 0.12
+      if (autoSpin) {
+        masterGroupRef.current.rotation.y += delta * 0.4
+        masterGroupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.15
+        masterGroupRef.current.rotation.z = Math.cos(state.clock.elapsedTime * 0.3) * 0.05
+      } else {
+        // Scrollytelling progressive rotation directly tied to scroll
+        const targetRotX = Math.sin(scrollProgress * Math.PI * 1.5) * 0.35 + pointer.y * 0.15
+        const targetRotY = scrollProgress * Math.PI * 2.5 + pointer.x * 0.25
+        const targetRotZ = Math.sin(scrollProgress * Math.PI) * 0.12
 
-      masterGroupRef.current.rotation.x = THREE.MathUtils.damp(
-        masterGroupRef.current.rotation.x,
-        targetRotX,
-        4,
-        delta
-      )
-      masterGroupRef.current.rotation.y = THREE.MathUtils.damp(
-        masterGroupRef.current.rotation.y,
-        targetRotY,
-        4,
-        delta
-      )
-      masterGroupRef.current.rotation.z = THREE.MathUtils.damp(
-        masterGroupRef.current.rotation.z,
-        targetRotZ,
-        4,
-        delta
-      )
+        masterGroupRef.current.rotation.x = THREE.MathUtils.damp(
+          masterGroupRef.current.rotation.x,
+          targetRotX,
+          4,
+          delta
+        )
+        masterGroupRef.current.rotation.y = THREE.MathUtils.damp(
+          masterGroupRef.current.rotation.y,
+          targetRotY,
+          4,
+          delta
+        )
+        masterGroupRef.current.rotation.z = THREE.MathUtils.damp(
+          masterGroupRef.current.rotation.z,
+          targetRotZ,
+          4,
+          delta
+        )
+      }
     }
 
     // Exploded View Dynamics directly tied to explodeProgress
