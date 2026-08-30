@@ -141,7 +141,7 @@ export function Scene({
 
             {/* 3D Data Network & Workflow (Appears later) */}
             {networkScale > 0.01 && (
-               <DataNetwork />
+               <DataNetwork scrollProgress={scrollProgress} networkScale={networkScale} />
             )}
 
             {/* Soft Studio Floor Contact Shadow - Lower resolution on mobile */}

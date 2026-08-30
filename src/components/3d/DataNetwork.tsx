@@ -1,11 +1,13 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useScrollytelling } from '../../hooks/useScrollytelling'
 
-export function DataNetwork() {
-  const { scrollProgress, networkScale } = useScrollytelling()
+export interface DataNetworkProps {
+  scrollProgress?: number
+  networkScale?: number
+}
 
+export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetworkProps) {
   const groupRef = useRef<THREE.Group>(null)
   const linesRef = useRef<THREE.LineSegments>(null)
   const nodesRef = useRef<THREE.InstancedMesh>(null)
