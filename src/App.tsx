@@ -14,7 +14,48 @@ import { CTASection } from './components/ui/CTASection'
 import { TeamSection } from './components/ui/TeamSection'
 import { ErrorBoundary } from './components/common/ErrorBoundary'
 import { useScrollytelling } from './hooks/useScrollytelling'
+import { useAutoLoop } from './hooks/useAutoLoop'
 import { ReadyContext } from './context/ReadyContext'
+
+function AutoLoopApp() {
+  const {
+    scrollProgress,
+    dangerMix,
+    explode,
+    cameraZ,
+    cameraY,
+    capsuleScale,
+    networkScale,
+  } = useAutoLoop()
+
+  return (
+    <div className="w-screen h-screen bg-gradient-to-b from-[#f6f8f7] to-[#e5f4f0] flex flex-col items-center justify-center overflow-hidden">
+      <div className="absolute top-10 flex items-center justify-center gap-3 z-50">
+        <div className="w-10 h-10 rounded-xl bg-[#216e63] flex items-center justify-center">
+          <span className="text-white font-bold text-xl">Y</span>
+        </div>
+        <span className="text-2xl font-black tracking-tight text-[#17211f]">
+          YaCheck<span className="text-[#216e63]">.</span>
+        </span>
+      </div>
+      <div className="w-full h-full pointer-events-none">
+        <Scene
+          scrollProgress={scrollProgress}
+          dangerMix={dangerMix}
+          explodeProgress={explode}
+          cameraZ={cameraZ}
+          cameraY={cameraY}
+          capsuleScale={capsuleScale}
+          networkScale={networkScale}
+          autoSpin={false}
+        />
+      </div>
+      <div className="absolute bottom-10 text-[#216e63] font-mono text-sm tracking-widest font-bold">
+        AI MEDICATION SAFETY
+      </div>
+    </div>
+  )
+}
 
 export default function App() {
   const [isLoopMode, setIsLoopMode] = useState(false)
@@ -27,6 +68,10 @@ export default function App() {
     }
   }, [])
 
+  if (isLoopMode) {
+    return <AutoLoopApp />
+  }
+
   const {
     scrollProgress,
     dangerMix,
@@ -38,36 +83,6 @@ export default function App() {
     currentSection,
     scrollToSection,
   } = useScrollytelling('#scroll-container')
-
-  if (isLoopMode) {
-    return (
-      <div className="w-screen h-screen bg-gradient-to-b from-[#f6f8f7] to-[#e5f4f0] flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute top-10 flex items-center justify-center gap-3 z-50">
-          <div className="w-10 h-10 rounded-xl bg-[#216e63] flex items-center justify-center">
-            <span className="text-white font-bold text-xl">Y</span>
-          </div>
-          <span className="text-2xl font-black tracking-tight text-[#17211f]">
-            YaCheck<span className="text-[#216e63]">.</span>
-          </span>
-        </div>
-        <div className="w-full h-full">
-          <Scene
-            scrollProgress={0}
-            dangerMix={0}
-            explodeProgress={0}
-            cameraZ={5.5}
-            cameraY={0}
-            capsuleScale={1}
-            networkScale={0}
-            autoSpin={true}
-          />
-        </div>
-        <div className="absolute bottom-10 text-[#216e63] font-mono text-sm tracking-widest font-bold">
-          AI MEDICATION SAFETY
-        </div>
-      </div>
-    )
-  }
 
   return (
     <ErrorBoundary>
