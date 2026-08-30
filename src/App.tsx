@@ -57,20 +57,9 @@ function AutoLoopApp() {
   )
 }
 
-export default function App() {
-  const [isLoopMode, setIsLoopMode] = useState(false)
+function MainApp() {
   const [isReady, setIsReady] = useState(false)
   const handleLoadingComplete = useCallback(() => setIsReady(true), [])
-
-  useEffect(() => {
-    if (window.location.search.includes('loop=true')) {
-      setIsLoopMode(true)
-    }
-  }, [])
-
-  if (isLoopMode) {
-    return <AutoLoopApp />
-  }
 
   const {
     scrollProgress,
@@ -88,18 +77,12 @@ export default function App() {
     <ErrorBoundary>
       <Analytics />
       <ReadyContext.Provider value={isReady}>
-
-        {/* Splash Loading Animation — blocks until all 3D & visual assets ready */}
         <LoadingScreen onComplete={handleLoadingComplete} />
-
         <div
           id="scroll-container"
           className="relative w-full min-h-screen bg-[#f6f8f7] text-[#17211f] selection:bg-[#216e63]/20 selection:text-[#17211f] overflow-x-hidden"
         >
-          {/* Background — CSS orbs + dot grid (GSAP-driven, zero re-renders) */}
           <DynamicBackground />
-
-          {/* Fixed 3D WebGL Canvas Layer — 3D Studio Capsule for ALL devices */}
           <div className="fixed inset-0 z-0 w-full h-full pointer-events-none">
             <Suspense fallback={null}>
               <Scene
@@ -111,17 +94,14 @@ export default function App() {
                 capsuleScale={capsuleScale}
                 networkScale={networkScale}
                 isExploded={explode > 0.5}
+                autoSpin={false}
               />
             </Suspense>
           </div>
-
-          {/* Navigation */}
           <Navigation
             currentSection={currentSection}
             onNavigate={scrollToSection}
           />
-
-          {/* Scrollytelling Content */}
           <main className="relative z-10 w-full pointer-events-none">
             <HeroSection onExploreClick={() => scrollToSection('problem')} />
             <ProblemSection />
@@ -135,8 +115,23 @@ export default function App() {
             </div>
           </main>
         </div>
-
       </ReadyContext.Provider>
     </ErrorBoundary>
   )
+}
+
+export default function App() {
+  const [isLoopMode, setIsLoopMode] = useState(false)
+  const [modeChecked, setModeChecked] = useState(false)
+
+  useEffect(() => {
+    if (window.location.search.includes('loop=true')) {
+      setIsLoopMode(true)
+    }
+    setModeChecked(true)
+  }, [])
+
+  if (!modeChecked) return null
+
+  return isLoopMode ? <AutoLoopApp /> : <MainApp />
 }
