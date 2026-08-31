@@ -143,7 +143,6 @@ export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetwor
           color="#216e63"
           anchorX="center"
           anchorY="middle"
-          font="https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxTOlOV.woff"
           characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:"
           fillOpacity={0.85}
         >
