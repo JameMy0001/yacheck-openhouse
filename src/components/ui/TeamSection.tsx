@@ -113,20 +113,24 @@ export function TeamSection() {
               </div>
 
               {/* Certificate Image Placeholder */}
-              <div className="flex-1 w-full flex justify-end">
+              <div className="flex-[1.2] w-full flex justify-end">
                 <a 
                   href="https://docs.google.com/document/d/e/2PACX-1vRlhStD7PZaXV5-XUiBVvZvVeqOM_ry93YFu1j7tm6r1RX4e6Mq3mAoypdxg6NL0LQlWem_kz_b0hAs/pub" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block w-full max-w-lg bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 group hover:border-[#f2a65a]/50 transition-colors shadow-inner overflow-hidden relative cursor-pointer"
+                  onClick={(e) => {
+                    // Fallback for some mobile webviews
+                    e.stopPropagation();
+                  }}
+                  className="block w-full max-w-[500px] bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 group hover:border-[#f2a65a]/50 transition-colors shadow-inner overflow-hidden relative cursor-pointer z-50 pointer-events-auto"
                 >
-                  <div className="aspect-[21/9] w-full">
+                  <div className="w-full flex items-center justify-center">
                     <img 
                       src="/images/award-genai.png" 
                       alt="Google Cloud Gen AI Academy APAC Edition" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 pointer-events-none">
                       <span className="text-xs text-white font-mono font-medium flex items-center gap-2">
                         View Announcement ↗
                       </span>
