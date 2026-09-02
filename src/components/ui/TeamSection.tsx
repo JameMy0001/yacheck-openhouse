@@ -101,27 +101,36 @@ export function TeamSection() {
               <div className="flex flex-col gap-4 max-w-xl">
                 <div className="flex items-center gap-2 text-[#f2a65a] font-mono font-bold text-xs tracking-widest uppercase">
                   <Trophy className="w-4 h-4" />
-                  Asian Regional Achievement
+                  Asian Regional Achievement - Top 100
                 </div>
                 <h3 className="text-3xl md:text-4xl font-black text-white font-prompt leading-tight">
-                  เข้ารอบ 100 ทีมสุดท้ายระดับเอเชีย
+                  Google Cloud Gen AI Academy
+                  <span className="block text-xl text-[#00F2FE] mt-2 font-mono">APAC Edition (Cohort 2)</span>
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed font-light">
-                  ผลงาน <span className="text-[#00F2FE] font-medium">YaCheck</span> ได้รับการคัดเลือกเป็น 1 ใน 100 โปรเจกต์นวัตกรรมยอดเยี่ยมระดับภูมิภาคเอเชีย (Top 100 Asia) ประจำปีนี้ สะท้อนถึงศักยภาพของระบบ AI ในการยกระดับความปลอดภัยทางการแพทย์ระดับสากล
+                <p className="text-gray-400 text-sm leading-relaxed font-light mt-2">
+                  ผลงาน <span className="text-white font-medium">YaCheck</span> ในนามทีม <span className="text-[#f2a65a] font-bold">"Pioneer New Gen"</span> ประสบความสำเร็จในการผ่านเข้ารอบและคว้า <span className="text-white font-medium">อันดับที่ 90 จาก 100 ทีมสุดท้ายระดับภูมิภาคเอเชียแปซิฟิก</span> ในโครงการ Google Cloud Gen AI Academy (Unified Data Analytics & Intelligence)
                 </p>
               </div>
 
               {/* Certificate Image Placeholder */}
               <div className="w-full md:w-auto flex-shrink-0">
-                <div className="w-full md:w-72 h-48 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 flex flex-col items-center justify-center gap-3 group hover:border-[#f2a65a]/50 transition-colors shadow-inner overflow-hidden relative cursor-pointer">
-                  {/* If user uploads the certificate, we can replace this inner div with an <img src="..." /> */}
-                  <div className="w-12 h-12 rounded-full bg-[#f2a65a]/20 flex items-center justify-center text-[#f2a65a] group-hover:scale-110 transition-transform duration-500">
-                    <Trophy className="w-6 h-6" />
+                <a 
+                  href="https://docs.google.com/document/d/e/2PACX-1vRlhStD7PZaXV5-XUiBVvZvVeqOM_ry93YFu1j7tm6r1RX4e6Mq3mAoypdxg6NL0LQlWem_kz_b0hAs/pub" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full md:w-[320px] h-[180px] bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 group hover:border-[#f2a65a]/50 transition-colors shadow-inner overflow-hidden relative cursor-pointer"
+                >
+                  <img 
+                    src="/images/award-genai.png" 
+                    alt="Google Cloud Gen AI Academy APAC Edition" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span className="text-xs text-white font-mono font-medium flex items-center gap-2">
+                      View Announcement ↗
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-400 font-mono group-hover:text-white transition-colors">
-                    [ รออัปโหลดรูปเกียรติบัตร ]
-                  </span>
-                </div>
+                </a>
               </div>
             </div>
           </div>
