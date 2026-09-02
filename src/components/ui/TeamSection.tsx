@@ -1,4 +1,5 @@
 import { ScrollReveal } from './ScrollReveal'
+import { Trophy } from 'lucide-react'
 
 export function TeamSection() {
   const team = [
@@ -86,6 +87,45 @@ export function TeamSection() {
           </ScrollReveal>
         </div>
 
+      </div>
+
+      {/* AWARDS & ACHIEVEMENTS */}
+      <div className="max-w-6xl mx-auto mt-24">
+        <ScrollReveal direction="up" distance={30} delay={0.2}>
+          <div className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#17211f] to-[#0f1514] p-8 md:p-12 border border-[#216e63]/30 shadow-2xl">
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-[#f2a65a] rounded-full blur-[100px] opacity-20 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-[#216e63] rounded-full blur-[100px] opacity-20 pointer-events-none" />
+            
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 relative z-10">
+              <div className="flex flex-col gap-4 max-w-xl">
+                <div className="flex items-center gap-2 text-[#f2a65a] font-mono font-bold text-xs tracking-widest uppercase">
+                  <Trophy className="w-4 h-4" />
+                  Asian Regional Achievement
+                </div>
+                <h3 className="text-3xl md:text-4xl font-black text-white font-prompt leading-tight">
+                  เข้ารอบ 100 ทีมสุดท้ายระดับเอเชีย
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed font-light">
+                  ผลงาน <span className="text-[#00F2FE] font-medium">YaCheck</span> ได้รับการคัดเลือกเป็น 1 ใน 100 โปรเจกต์นวัตกรรมยอดเยี่ยมระดับภูมิภาคเอเชีย (Top 100 Asia) ประจำปีนี้ สะท้อนถึงศักยภาพของระบบ AI ในการยกระดับความปลอดภัยทางการแพทย์ระดับสากล
+                </p>
+              </div>
+
+              {/* Certificate Image Placeholder */}
+              <div className="w-full md:w-auto flex-shrink-0">
+                <div className="w-full md:w-72 h-48 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 flex flex-col items-center justify-center gap-3 group hover:border-[#f2a65a]/50 transition-colors shadow-inner overflow-hidden relative cursor-pointer">
+                  {/* If user uploads the certificate, we can replace this inner div with an <img src="..." /> */}
+                  <div className="w-12 h-12 rounded-full bg-[#f2a65a]/20 flex items-center justify-center text-[#f2a65a] group-hover:scale-110 transition-transform duration-500">
+                    <Trophy className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs text-gray-400 font-mono group-hover:text-white transition-colors">
+                    [ รออัปโหลดรูปเกียรติบัตร ]
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
