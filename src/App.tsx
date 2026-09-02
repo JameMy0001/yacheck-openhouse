@@ -18,15 +18,7 @@ import { useAutoLoop } from './hooks/useAutoLoop'
 import { ReadyContext } from './context/ReadyContext'
 
 function AutoLoopApp() {
-  const {
-    scrollProgress,
-    dangerMix,
-    explode,
-    cameraZ,
-    cameraY,
-    capsuleScale,
-    networkScale,
-  } = useAutoLoop()
+  useAutoLoop()
 
   return (
     <div className="w-screen h-screen bg-gradient-to-b from-[#f6f8f7] to-[#e5f4f0] flex flex-col items-center justify-center overflow-hidden">
@@ -39,16 +31,7 @@ function AutoLoopApp() {
         </span>
       </div>
       <div className="w-full h-full pointer-events-none">
-        <Scene
-          scrollProgress={scrollProgress}
-          dangerMix={dangerMix}
-          explodeProgress={explode}
-          cameraZ={cameraZ}
-          cameraY={cameraY}
-          capsuleScale={capsuleScale}
-          networkScale={networkScale}
-          autoSpin={false}
-        />
+        <Scene autoSpin={false} />
       </div>
       <div className="absolute bottom-10 text-[#216e63] font-mono text-sm tracking-widest font-bold">
         AI MEDICATION SAFETY
@@ -62,13 +45,6 @@ function MainApp() {
   const handleLoadingComplete = useCallback(() => setIsReady(true), [])
 
   const {
-    scrollProgress,
-    dangerMix,
-    explode,
-    cameraZ,
-    cameraY,
-    capsuleScale,
-    networkScale,
     currentSection,
     scrollToSection,
   } = useScrollytelling('#scroll-container')
@@ -85,17 +61,7 @@ function MainApp() {
           <DynamicBackground />
           <div className="fixed inset-0 z-0 w-full h-full pointer-events-none">
             <Suspense fallback={null}>
-              <Scene
-                scrollProgress={scrollProgress}
-                dangerMix={dangerMix}
-                explodeProgress={explode}
-                cameraZ={cameraZ}
-                cameraY={cameraY}
-                capsuleScale={capsuleScale}
-                networkScale={networkScale}
-                isExploded={explode > 0.5}
-                autoSpin={false}
-              />
+              <Scene autoSpin={false} />
             </Suspense>
           </div>
           <Navigation

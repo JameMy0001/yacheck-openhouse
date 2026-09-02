@@ -7,16 +7,9 @@ import { BlendFunction } from 'postprocessing'
 import { MedicalCapsuleStudio } from './MedicalCapsuleStudio'
 import { DataNetwork } from './DataNetwork'
 import { ErrorBoundary } from '../common/ErrorBoundary'
+import { animState } from '../../store/animState'
 
 export interface SceneProps {
-  scrollProgress?: number
-  dangerMix?: number
-  isExploded?: boolean
-  explodeProgress?: number
-  cameraZ?: number
-  cameraY?: number
-  capsuleScale?: number
-  networkScale?: number
   className?: string
   autoSpin?: boolean
 }
@@ -62,19 +55,14 @@ export function StudioLighting() {
 /**
  * Smooth Interactive Camera Controller
  */
-export function CameraController({
-  targetCamZ = 6.0,
-  targetCamY = 0.0,
-}: {
-  targetCamZ?: number
-  targetCamY?: number
-}) {
+export function CameraController() {
   const { camera, viewport } = useThree()
 
   useFrame((_state, delta) => {
+    const { cameraZ, cameraY } = animState
     const isPortrait = viewport.aspect < 1
-    const baseZ = isPortrait ? targetCamZ * 1.35 : targetCamZ
-    const baseY = isPortrait ? targetCamY + 0.25 : targetCamY
+    const baseZ = isPortrait ? cameraZ * 1.35 : cameraZ
+    const baseY = isPortrait ? cameraY + 0.25 : cameraY
 
     camera.position.x = THREE.MathUtils.damp(camera.position.x, 0, 2.5, delta)
     camera.position.y = THREE.MathUtils.damp(camera.position.y, baseY, 2.5, delta)
@@ -86,13 +74,6 @@ export function CameraController({
 }
 
 export function Scene({
-  scrollProgress = 0,
-  dangerMix = 0,
-  explodeProgress = 0,
-  cameraZ = 5.8,
-  cameraY = 0.0,
-  capsuleScale = 1.0,
-  networkScale = 0.0,
   className = 'w-full h-full',
   autoSpin = false,
 }: SceneProps) {
@@ -120,7 +101,7 @@ export function Scene({
           }}
           className="w-full h-full"
         >
-          <CameraController targetCamZ={cameraZ} targetCamY={cameraY} />
+          <CameraController />
           <StudioLighting />
 
           <Suspense fallback={null}>
@@ -128,21 +109,10 @@ export function Scene({
             <Environment preset="city" />
 
             {/* Medical Tech 3D Centerpiece */}
-            {capsuleScale > 0.01 && (
-              <group scale={capsuleScale}>
-                <MedicalCapsuleStudio
-                  explodeProgress={explodeProgress}
-                  scrollProgress={scrollProgress}
-                  dangerMix={dangerMix}
-                  autoSpin={autoSpin}
-                />
-              </group>
-            )}
+            <MedicalCapsuleStudio autoSpin={autoSpin} />
 
-            {/* 3D Data Network & Workflow (Appears later) */}
-            {networkScale > 0.01 && (
-               <DataNetwork scrollProgress={scrollProgress} networkScale={networkScale} />
-            )}
+            {/* 3D Data Network & Workflow */}
+            <DataNetwork />
 
             {/* Soft Studio Floor Contact Shadow - Lower resolution on mobile */}
             <ContactShadows

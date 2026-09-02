@@ -1,20 +1,13 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { updateAnimState } from '../store/animState'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export type SectionId = 'hero' | 'problem' | 'features' | 'agent' | 'database' | 'specs' | 'cta'
 
 export function useScrollytelling(containerId = '#scroll-container') {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [scrollVelocity, setScrollVelocity] = useState(0)
-  const [dangerMix, setDangerMix] = useState(0)
-  const [explode, setExplode] = useState(0)
-  const [cameraZ, setCameraZ] = useState(6.0)
-  const [cameraY, setCameraY] = useState(0.0)
-  const [capsuleScale, setCapsuleScale] = useState(1.0)
-  const [networkScale, setNetworkScale] = useState(0.0)
   const [currentSection, setCurrentSection] = useState<SectionId>('hero')
 
   const animStateRef = useRef({
@@ -57,19 +50,20 @@ export function useScrollytelling(containerId = '#scroll-container') {
         end: 'bottom bottom',
         scrub: 1,
         onUpdate: (self) => {
-          setScrollProgress(self.progress)
-          setScrollVelocity(self.getVelocity() / 1000) // normalized velocity
+          updateAnimState({ scrollProgress: self.progress })
         },
       },
     })
 
     const syncState = () => {
-      setDangerMix(animStateRef.current.dangerMix)
-      setExplode(animStateRef.current.explode)
-      setCameraZ(animStateRef.current.cameraZ)
-      setCameraY(animStateRef.current.cameraY)
-      setCapsuleScale(animStateRef.current.capsuleScale)
-      setNetworkScale(animStateRef.current.networkScale)
+      updateAnimState({
+        dangerMix: animStateRef.current.dangerMix,
+        explode: animStateRef.current.explode,
+        cameraZ: animStateRef.current.cameraZ,
+        cameraY: animStateRef.current.cameraY,
+        capsuleScale: animStateRef.current.capsuleScale,
+        networkScale: animStateRef.current.networkScale,
+      })
     }
 
     tl.to(
@@ -196,14 +190,6 @@ export function useScrollytelling(containerId = '#scroll-container') {
   }, [])
 
   return {
-    scrollProgress,
-    scrollVelocity,
-    dangerMix,
-    explode,
-    cameraZ,
-    cameraY,
-    capsuleScale,
-    networkScale,
     currentSection,
     scrollToSection,
   }

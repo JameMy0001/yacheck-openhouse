@@ -1,15 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { updateAnimState } from '../store/animState'
 
 export function useAutoLoop() {
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [dangerMix, setDangerMix] = useState(0)
-  const [explode, setExplode] = useState(0)
-  const [cameraZ, setCameraZ] = useState(6.0)
-  const [cameraY, setCameraY] = useState(0.0)
-  const [capsuleScale, setCapsuleScale] = useState(1.0)
-  const [networkScale, setNetworkScale] = useState(0.0)
-
   const animStateRef = useRef({
     progress: 0,
     dangerMix: 0,
@@ -28,13 +21,15 @@ export function useAutoLoop() {
     })
 
     const syncState = () => {
-      setScrollProgress(animStateRef.current.progress)
-      setDangerMix(animStateRef.current.dangerMix)
-      setExplode(animStateRef.current.explode)
-      setCameraZ(animStateRef.current.cameraZ)
-      setCameraY(animStateRef.current.cameraY)
-      setCapsuleScale(animStateRef.current.capsuleScale)
-      setNetworkScale(animStateRef.current.networkScale)
+      updateAnimState({
+        scrollProgress: animStateRef.current.progress,
+        dangerMix: animStateRef.current.dangerMix,
+        explode: animStateRef.current.explode,
+        cameraZ: animStateRef.current.cameraZ,
+        cameraY: animStateRef.current.cameraY,
+        capsuleScale: animStateRef.current.capsuleScale,
+        networkScale: animStateRef.current.networkScale,
+      })
     }
 
     // Multiply durations by a factor (e.g. 20) to make the whole timeline take ~20 seconds
@@ -146,13 +141,5 @@ export function useAutoLoop() {
     }
   }, [])
 
-  return {
-    scrollProgress,
-    dangerMix,
-    explode,
-    cameraZ,
-    cameraY,
-    capsuleScale,
-    networkScale,
-  }
+  return {}
 }

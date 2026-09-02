@@ -2,18 +2,17 @@ import { useRef, useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Text } from '@react-three/drei'
-
-export interface DataNetworkProps {
-  scrollProgress?: number
-  networkScale?: number
-}
+import { animState } from '../../store/animState'
 
 const LABELS = [
   'PARACETAMOL', 'RX:392', 'DB_SYNC', 'AI_CHECK:OK', 'CONFLICT:0',
   'USER_992', 'API_OK', 'AMOXICILLIN', 'SAFE', 'CHLORPHENIRAMINE'
 ]
 
-export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetworkProps) {
+// Reusable vector to prevent GC spikes in useFrame
+const localCamPos = new THREE.Vector3()
+
+export function DataNetwork() {
   const groupRef = useRef<THREE.Group>(null)
   const linesRef = useRef<THREE.LineSegments>(null)
   const nodesRef = useRef<THREE.InstancedMesh>(null)
@@ -66,7 +65,20 @@ export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetwor
 
   // Setup instanced mesh matrix
   const dummy = useMemo(() => new THREE.Object3D(), [])
+  
   useFrame(() => {
+    const { scrollProgress, networkScale } = animState
+
+    if (groupRef.current) {
+      // Hide if scale is 0 to save performance
+      if (networkScale < 0.01) {
+        groupRef.current.visible = false
+        return
+      } else {
+        groupRef.current.visible = true
+      }
+    }
+
     if (nodesRef.current) {
       for (let i = 0; i < nodeCount; i++) {
         dummy.position.set(
@@ -96,9 +108,8 @@ export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetwor
         )
         
         // We want the text to face the camera, but the group itself is rotating.
-        // So we get the camera's world position, convert it to the group's local space,
-        // and make the text look at that local position.
-        const localCamPos = camera.position.clone()
+        // Convert world camera position to local group position using the reusable vector
+        localCamPos.copy(camera.position)
         groupRef.current.worldToLocal(localCamPos)
         textMesh.lookAt(localCamPos)
       }
@@ -111,9 +122,6 @@ export function DataNetwork({ scrollProgress = 0, networkScale = 0 }: DataNetwor
       
       // Apply the animated scale from GSAP
       groupRef.current.scale.setScalar(networkScale)
-
-      // Hide if scale is 0 to save performance
-      groupRef.current.visible = networkScale > 0.01
     }
 
     if (linesRef.current) {

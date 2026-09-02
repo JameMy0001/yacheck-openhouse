@@ -1,11 +1,9 @@
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
+import { animState } from '../../store/animState'
 
 export interface MedicalCapsuleStudioProps {
-  explodeProgress?: number
-  scrollProgress?: number
-  dangerMix?: number
   autoSpin?: boolean
 }
 
@@ -14,9 +12,6 @@ const COLOR_DANGER = new THREE.Color('#b42318') // Official YaCheck Danger Red
 const COLOR_AMBER = new THREE.Color('#f2a65a') // Official YaCheck Warm Amber
 
 export function MedicalCapsuleStudio({
-  explodeProgress = 0,
-  scrollProgress = 0,
-  dangerMix = 0,
   autoSpin = false,
 }: MedicalCapsuleStudioProps) {
   const masterGroupRef = useRef<THREE.Group>(null)
@@ -149,9 +144,17 @@ export function MedicalCapsuleStudio({
   // 3. Animation Frame - PURELY SCROLL-DRIVEN & CURSOR PARALLAX (Zero continuous auto-spinning)
   useFrame((state, delta) => {
     const { pointer } = state
+    const { scrollProgress, explode: explodeProgress, dangerMix, capsuleScale } = animState
 
-    // Master orientation: smooth scroll rotation + interactive pointer tilt (Locked when idle)
     if (masterGroupRef.current) {
+      // Hide completely if scale is 0 to save processing
+      if (capsuleScale < 0.01) {
+        masterGroupRef.current.visible = false
+        return
+      } else {
+        masterGroupRef.current.visible = true
+        masterGroupRef.current.scale.setScalar(capsuleScale)
+      }
       if (autoSpin) {
         masterGroupRef.current.rotation.y += delta * 0.4
         masterGroupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.15
