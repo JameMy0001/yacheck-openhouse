@@ -89,7 +89,7 @@ export function AgentPhoneMockup() {
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
               <div className="bg-white border border-[#dde5e2] p-3.5 rounded-2xl rounded-bl-sm text-sm text-[#4a5855] leading-relaxed shadow-sm">
-                สวัสดีค่ะคุณเจมส์ 👋<br/>
+                สวัสดี 👋<br/>
                 วันนี้มีอาการปวดหัว ไม่สบายตรงไหน หรืออยากให้ช่วยเช็กยาตัวไหนคะ?
               </div>
             </div>
