@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense } from 'react'
 import { Environment, ContactShadows } from '@react-three/drei'
 import * as THREE from 'three'
 import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
@@ -77,23 +77,14 @@ export function Scene({
   className = 'w-full h-full',
   autoSpin = false,
 }: SceneProps) {
-  // Performance optimization hook
-  const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
   return (
     <ErrorBoundary>
       <div className={`relative ${className}`}>
         <Canvas
           camera={{ position: [0, 0, 5.8], fov: 42, near: 0.1, far: 100 }}
-          dpr={isMobile ? [1, 1.5] : [1, 2]}
+          dpr={[1, 2]} // High resolution on all devices
           gl={{
-            antialias: !isMobile, // Disable antialiasing on mobile to save performance
+            antialias: true, // Enable antialiasing on all devices
             alpha: true,
             powerPreference: 'high-performance',
             toneMapping: THREE.ACESFilmicToneMapping,
@@ -114,20 +105,20 @@ export function Scene({
             {/* 3D Data Network & Workflow */}
             <DataNetwork />
 
-            {/* Soft Studio Floor Contact Shadow - Lower resolution on mobile */}
+            {/* Soft Studio Floor Contact Shadow */}
             <ContactShadows
               position={[0, -2.2, 0]}
               opacity={0.3}
               scale={10}
               blur={2.4}
               far={4}
-              resolution={isMobile ? 256 : 512}
+              resolution={512} // High-res shadow on all devices
               frames={1} // Only render shadow once instead of every frame to save massive performance
               color="#0f172a"
             />
             
-            {/* Disable post-processing entirely on mobile for smooth scrolling */}
-            {!isMobile && <PostProcessEffects />}
+            {/* Cinematic Post-Processing Effects for all devices */}
+            <PostProcessEffects />
           </Suspense>
         </Canvas>
       </div>
