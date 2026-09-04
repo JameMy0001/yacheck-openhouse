@@ -99,7 +99,7 @@ export function TeamSection() {
                         strokeLinejoin="round"
                         aria-hidden="true"
                         focusable="false"
-                        className="text-[#216e63] group-hover/badge:text-[#17211f] transition-colors shrink-0"
+                        className="text-[#216e63] group-hover/badge:text-[#17211f] group-focus/badge:text-[#17211f] group-focus-visible/badge:text-[#17211f] transition-colors shrink-0"
                       >
                         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>

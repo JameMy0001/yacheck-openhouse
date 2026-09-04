@@ -84,6 +84,9 @@ test('Badge anchor and SVG contain complete accessibility attributes', () => {
   if (!content.includes('focus-visible:ring-2')) {
     throw new Error('Missing keyboard focus visible ring indicator')
   }
+  if (!content.includes('group-focus/badge:text-[#17211f]') && !content.includes('group-focus-visible/badge:text-[#17211f]')) {
+    throw new Error('SVG missing keyboard focus color synchronization')
+  }
 })
 
 // 5. Visual Contrast & Design Tokens
