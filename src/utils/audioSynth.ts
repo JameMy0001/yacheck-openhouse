@@ -11,7 +11,7 @@ class AudioSynthesizer {
     try {
       this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
       this.isInitialized = true
-    } catch (e) {
+    } catch {
       console.warn('Web Audio API not supported')
     }
   }

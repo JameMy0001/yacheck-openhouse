@@ -38,7 +38,7 @@ export function ProblemSection() {
           <ScrollReveal direction="left" delay={0.05}>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#b42318]/30 bg-[#fee4e2] text-[#b42318] text-[11px] font-mono font-bold tracking-widest uppercase mb-4 shadow-xs">
               <AlertCircle className="w-3.5 h-3.5" />
-              <span>Critical Health Warning</span>
+              <span>The Crisis • Critical Health Warning</span>
             </div>
           </ScrollReveal>
 
