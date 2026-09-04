@@ -7,21 +7,25 @@ export function TeamSection() {
       nameTH: 'ธนเดช ชูระบำ',
       nameEN: 'Thanadet Churabum',
       nickname: 'Jame',
+      instagram: 'https://www.instagram.com/jamemm__/',
     },
     {
       nameTH: 'นาวิน สุธรรมชัย',
       nameEN: 'Navin Sutramchai',
       nickname: 'Boom',
+      instagram: 'https://www.instagram.com/l3oom.x/',
     },
     {
       nameTH: 'ธณเมธาวัฒน์ ศรีพิทักษ์',
       nameEN: 'Thanamethawat Sripitak',
       nickname: 'Meth',
+      instagram: 'https://www.instagram.com/thanamethawat/',
     },
     {
       nameTH: 'ภูตะวัน รุ่งเจริญกุล',
       nameEN: 'Photawan Roungcharoenkul',
       nickname: 'Phill',
+      instagram: 'https://www.instagram.com/seventy.morning/',
     },
   ]
 
@@ -64,8 +68,23 @@ export function TeamSection() {
                       {member.nickname}
                     </span>
                   </div>
-                  <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
-                    {member.nameEN}
+                  <div className="flex items-center gap-3">
+                    <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
+                      {member.nameEN}
+                    </div>
+                    <a 
+                      href={member.instagram} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-gray-300 hover:text-[#216e63] transition-colors duration-300 cursor-pointer pointer-events-auto"
+                      title={`Follow ${member.nickname} on Instagram`}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </ScrollReveal>
