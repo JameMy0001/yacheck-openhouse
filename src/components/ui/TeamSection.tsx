@@ -7,24 +7,28 @@ export function TeamSection() {
       nameTH: 'ธนเดช ชูระบำ',
       nameEN: 'Thanadet Churabum',
       nickname: 'Jame',
+      handle: '@jamemm__',
       instagram: 'https://www.instagram.com/jamemm__/',
     },
     {
       nameTH: 'นาวิน สุธรรมชัย',
       nameEN: 'Navin Sutramchai',
       nickname: 'Boom',
+      handle: '@l3oom.x',
       instagram: 'https://www.instagram.com/l3oom.x/',
     },
     {
       nameTH: 'ธณเมธาวัฒน์ ศรีพิทักษ์',
       nameEN: 'Thanamethawat Sripitak',
       nickname: 'Meth',
+      handle: '@thanamethawat',
       instagram: 'https://www.instagram.com/thanamethawat/',
     },
     {
       nameTH: 'ภูตะวัน รุ่งเจริญกุล',
       nameEN: 'Photawan Roungcharoenkul',
       nickname: 'Phill',
+      handle: '@seventy.morning',
       instagram: 'https://www.instagram.com/seventy.morning/',
     },
   ]
@@ -68,22 +72,36 @@ export function TeamSection() {
                       {member.nickname}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-xs text-gray-400 font-mono tracking-widest uppercase">
-                      {member.nameEN}
-                    </div>
+                  <div className="text-xs text-gray-400 font-mono tracking-widest uppercase mb-2">
+                    {member.nameEN}
+                  </div>
+                  <div>
                     <a 
                       href={member.instagram} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-gray-300 hover:text-[#216e63] transition-colors duration-300 cursor-pointer pointer-events-auto"
-                      title={`Follow ${member.nickname} on Instagram`}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#f6f8f7] hover:bg-[#eaf1ee] border border-[#dde5e2] hover:border-[#216e63]/40 text-[#216e63] hover:text-[#17211f] transition-all duration-300 shadow-xs hover:shadow-sm hover:scale-[1.02] active:scale-[0.98] group/badge w-fit cursor-pointer pointer-events-auto"
+                      title={`Follow ${member.nickname} (${member.handle}) on Instagram`}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="13" 
+                        height="13" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        className="text-[#216e63] group-hover/badge:text-[#17211f] transition-colors shrink-0"
+                      >
                         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                         <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                       </svg>
+                      <span className="font-mono text-xs font-medium tracking-tight">
+                        {member.handle}
+                      </span>
                     </a>
                   </div>
                 </div>
