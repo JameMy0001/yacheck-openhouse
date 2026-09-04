@@ -34,7 +34,7 @@ export function TeamSection() {
   ]
 
   return (
-    <section id="team" className="relative w-full bg-white py-32 px-8 sm:px-14 lg:px-20 border-t border-gray-100">
+    <section id="team" className="relative w-full bg-white py-32 px-8 sm:px-14 lg:px-20 border-t border-gray-100 scroll-mt-24">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 md:gap-24">
         
         {/* Left Column: Project & University Info */}
@@ -85,7 +85,7 @@ export function TeamSection() {
                       onClick={(e) => {
                         e.stopPropagation()
                       }}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f6f8f7] hover:bg-[#eaf1ee] focus:bg-[#eaf1ee] border border-[#dde5e2] hover:border-[#216e63]/40 focus:border-[#216e63] text-[#216e63] hover:text-[#17211f] focus:text-[#17211f] transition-all duration-300 shadow-xs hover:shadow-sm hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#216e63]/40 focus-visible:ring-offset-2 whitespace-nowrap group/badge w-fit cursor-pointer pointer-events-auto"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f6f8f7] hover:bg-[#eaf1ee] focus:bg-[#eaf1ee] active:bg-[#e2ebe7] border border-[#dde5e2] hover:border-[#216e63]/40 focus:border-[#216e63] active:border-[#216e63] text-[#216e63] hover:text-[#17211f] focus:text-[#17211f] active:text-[#17211f] transition-all duration-300 shadow-xs hover:shadow-sm hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#216e63]/40 focus-visible:ring-offset-2 whitespace-nowrap group/badge w-fit cursor-pointer pointer-events-auto select-none touch-manipulation"
                     >
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
@@ -99,7 +99,7 @@ export function TeamSection() {
                         strokeLinejoin="round"
                         aria-hidden="true"
                         focusable="false"
-                        className="text-[#216e63] group-hover/badge:text-[#17211f] group-focus/badge:text-[#17211f] group-focus-visible/badge:text-[#17211f] transition-colors shrink-0"
+                        className="text-[#216e63] group-hover/badge:text-[#17211f] group-focus/badge:text-[#17211f] group-focus-visible/badge:text-[#17211f] group-active/badge:text-[#17211f] transition-colors shrink-0"
                       >
                         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>

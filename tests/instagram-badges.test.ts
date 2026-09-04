@@ -87,11 +87,26 @@ test('Badge anchor and SVG contain complete accessibility attributes', () => {
   if (!content.includes('group-focus/badge:text-[#17211f]') && !content.includes('group-focus-visible/badge:text-[#17211f]')) {
     throw new Error('SVG missing keyboard focus color synchronization')
   }
+  if (!content.includes('group-active/badge:text-[#17211f]')) {
+    throw new Error('SVG missing active/tap press color synchronization')
+  }
 })
 
 // 5. Visual Contrast & Design Tokens
-test('Design tokens match high-contrast specifications', () => {
-  const tokens = ['bg-[#f6f8f7]', 'border-[#dde5e2]', 'text-[#216e63]', 'hover:text-[#17211f]', 'rounded-full', 'inline-flex', 'whitespace-nowrap']
+test('Design tokens match high-contrast and responsive specifications', () => {
+  const tokens = [
+    'bg-[#f6f8f7]',
+    'border-[#dde5e2]',
+    'text-[#216e63]',
+    'hover:text-[#17211f]',
+    'active:text-[#17211f]',
+    'rounded-full',
+    'inline-flex',
+    'whitespace-nowrap',
+    'touch-manipulation',
+    'select-none',
+    'scroll-mt-24'
+  ]
   for (const token of tokens) {
     if (!content.includes(token)) {
       throw new Error(`Missing expected design class/token: ${token}`)
