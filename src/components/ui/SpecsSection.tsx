@@ -11,7 +11,7 @@ export function SpecsSection() {
       side: 'left' as const,
     },
     {
-      title: 'ใช้งานได้ 100% แม้ไม่มีสัญญาณเน็ต',
+      title: 'ใช้งานแบบออฟไลน์ได้ แม้ไม่มีสัญญาณเน็ต',
       subtitle: 'Local-First SQLite Database',
       desc: 'เก็บข้อมูลตู้ยาและกฎความปลอดภัยไว้ในตัวเครื่องแบบออฟไลน์ อยู่ในที่อับสัญญาณก็ยังเปิดเช็กยาและรับการแจ้งเตือนได้ไม่สะดุด',
       icon: Database,
@@ -30,7 +30,7 @@ export function SpecsSection() {
     { label: 'คุ้มครองข้อมูลส่วนบุคคลตามกฎหมาย PDPA', icon: ShieldCheck },
     { label: 'เข้ารหัสความปลอดภัยแบบ End-to-End', icon: Lock },
     { label: 'สแกน QR / Barcode บนเครื่องทันใจ (<200ms)', icon: Zap },
-    { label: 'ระบบฐานข้อมูลกลาง Supabase เสถียร 99.9%', icon: RefreshCw },
+    { label: 'ระบบฐานข้อมูลคลาวด์มาตรฐานความปลอดภัยสูง', icon: RefreshCw },
   ]
 
   return (

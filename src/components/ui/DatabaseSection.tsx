@@ -36,8 +36,8 @@ export function DatabaseSection() {
     {
       title: 'สถานะการตรวจทาน',
       subtitle: 'Verification Status',
-      value: '100%',
-      status: 'ผ่านการรับรองครบทุกรายการ',
+      value: 'Verified',
+      status: 'อ้างอิงฐานข้อมูลทางการแพทย์มาตรฐาน',
       statusColor: 'text-[#067647]',
       dotColor: 'bg-[#067647]',
       badgeBg: 'bg-[#d1fadf]',
@@ -51,7 +51,6 @@ export function DatabaseSection() {
       drugB: 'ทิซานิดีน (Tizanidine)',
       severity: 'รุนแรง — ห้ามกินคู่กันเด็ดขาด',
       severityColor: 'text-[#b42318] bg-[#fee4e2] border-[#b42318]/30',
-      action: 'ห้ามรับประทานร่วมกัน เพราะอาจทำให้ความดันโลหิตตกอย่างรวดเร็วและง่วงซึมรุนแรง ให้รีบปรึกษาแพทย์',
       sources: ['DailyMed - NIH/NLM', 'accessdata.fda.gov', 'pubmed.ncbi.nlm.nih.gov'],
     },
     {
@@ -59,7 +58,6 @@ export function DatabaseSection() {
       drugB: 'เลโวไทรอกซิน (ยาไทรอยด์)',
       severity: 'เฝ้าระวัง — ต้องเว้นระยะเวลา',
       severityColor: 'text-[#d97706] bg-[#fef3c7] border-[#f2a65a]/40',
-      action: 'ธาตุเหล็กจะไปขัดขวางการดูดซึมยาไทรอยด์ ทำให้ยาไม่ได้ผล ควรเว้นระยะเวลาทานห่างกันอย่างน้อย 4 ชั่วโมง',
       sources: ['DailyMed - NIH/NLM', 'accessdata.fda.gov', 'pubmed.ncbi.nlm.nih.gov'],
     },
     {
@@ -67,16 +65,15 @@ export function DatabaseSection() {
       drugB: 'ดิจอกซิน (ยาโรคหัวใจ)',
       severity: 'เฝ้าระวัง — ติดตามอาการใกล้ชิด',
       severityColor: 'text-[#d97706] bg-[#fef3c7] border-[#f2a65a]/40',
-      action: 'ยาฆ่าเชื้ออาจทำให้ระดับยาดิจอกซินในกระแสเลือดสูงขึ้น เสี่ยงหัวใจเต้นผิดจังหวะ ต้องให้แพทย์ช่วยดูแล',
       sources: ['DailyMed - NIH/NLM', 'accessdata.fda.gov'],
     },
   ]
 
   const foodHerbalSamples = [
-    { name: 'ฟ้าทะลายโจร (Andrographis)', code: 'H_ANDROGRAPHIS_001', note: 'ระวังหากกินคู่กับยาลดความดัน เพราะอาจเสริมฤทธิ์จนความดันต่ำเกินไป' },
-    { name: 'ใบแปะก๊วย (Ginkgo Biloba)', code: 'H_GINKGO_001', note: 'เสริมฤทธิ์ยาละลายลิ่มเลือด อาจทำให้มีเลือดออกง่ายหรือหยุดยาก' },
-    { name: 'น้ำเกรปฟรุต (Grapefruit)', code: 'F_GRAPEFRUIT_001', note: 'ขัดขวางการย่อยสลายยาลดไขมัน ทำให้ตัวยาค้างในเลือดสูงเกินมาตรฐาน' },
-    { name: 'นมและผลิตภัณฑ์แคลเซียม', code: 'F_DAIRY_001', note: 'แคลเซียมจะไปจับตัวกับยาฆ่าเชื้อบางกลุ่ม ทำให้ร่างกายดูดซึมยาได้น้อยลง' },
+    { name: 'ฟ้าทะลายโจร (Andrographis)', code: 'H_ANDROGRAPHIS_001', note: 'กลุ่มสมุนไพรที่มีรายงานปฏิกิริยาร่วมกับยาบางประเภท' },
+    { name: 'ใบแปะก๊วย (Ginkgo Biloba)', code: 'H_GINKGO_001', note: 'กลุ่มสารสกัดสมุนไพรในรายการเฝ้าระวังปฏิกิริยาร่วมกับยา' },
+    { name: 'น้ำเกรปฟรุต (Grapefruit)', code: 'F_GRAPEFRUIT_001', note: 'กลุ่มผลไม้ที่มีผลต่อกระบวนการดูดซึมยาบางกลุ่ม' },
+    { name: 'นมและผลิตภัณฑ์แคลเซียม', code: 'F_DAIRY_001', note: 'กลุ่มอาหารและเครื่องดื่มที่อาจส่งผลต่อการดูดซึมยาบางชนิด' },
   ]
 
   const authoritySources = [
@@ -116,7 +113,7 @@ export function DatabaseSection() {
 
           <ScrollReveal direction="left" delay={0.25}>
             <p className="text-sm sm:text-base text-[#4a5855] font-normal leading-relaxed max-w-xl">
-              เชื่อมต่อกับฐานข้อมูลยากลางเวอร์ชัน <strong className="text-[#17211f] font-bold">v7 บน Supabase</strong> ที่ทีมงานกลั่นกรองและอ้างอิงจากงานวิจัยและเอกสารกำกับยาระดับสากล 100%
+              เชื่อมต่อกับฐานข้อมูลยากลางเวอร์ชัน <strong className="text-[#17211f] font-bold">v7 บน Supabase</strong> ที่รวบรวมและอ้างอิงจากงานวิจัยและเอกสารกำกับยาระดับสากล
             </p>
           </ScrollReveal>
         </div>
@@ -187,10 +184,6 @@ export function DatabaseSection() {
                       {item.severity}
                     </span>
                   </div>
-
-                  <p className="text-xs sm:text-sm text-[#33413e] font-normal leading-relaxed">
-                    {item.action}
-                  </p>
 
                   <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#dde5e2]/60 text-[10px] font-mono text-[#64716e]">
                     <span className="font-bold text-[#17211f]">หลักฐานอ้างอิง:</span>

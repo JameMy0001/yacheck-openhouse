@@ -72,7 +72,7 @@ export function AgentPhoneMockup() {
               <span className="font-bold text-[#17211f] text-base leading-none">YaCheck AI</span>
               <span className="text-[10px] text-[#067647] font-mono flex items-center gap-1 mt-1">
                 <ShieldCheck className="w-3 h-3" />
-                Medical Grade
+                Clinical Assistant
               </span>
             </div>
             <button className="w-8 h-8 flex items-center justify-center text-[#4a5855]">
@@ -89,8 +89,8 @@ export function AgentPhoneMockup() {
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
               <div className="bg-white border border-[#dde5e2] p-3.5 rounded-2xl rounded-bl-sm text-sm text-[#4a5855] leading-relaxed shadow-sm">
-                สวัสดี 👋<br/>
-                วันนี้มีอาการปวดหัว ไม่สบายตรงไหน หรืออยากให้ช่วยเช็กยาตัวไหนคะ?
+                สวัสดีค่ะ<br/>
+                มีเรื่องยาตัวไหนที่ต้องการสอบถามหรือให้ช่วยตรวจเช็กข้อมูลไหมคะ?
               </div>
             </div>
 
@@ -128,7 +128,7 @@ export function AgentPhoneMockup() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="bg-white border border-[#dde5e2] p-3.5 rounded-2xl rounded-bl-sm text-sm text-[#4a5855] leading-relaxed shadow-sm">
-                    เบื้องต้นแนะนำให้ทานยา <strong className="text-[#216e63]">พาราเซตามอล (Paracetamol) 500mg</strong> จำนวน 1 เม็ด ทุกๆ 4-6 ชั่วโมงค่ะ 💊
+                    เบื้องต้นระบบสามารถช่วยตรวจสอบข้อมูลยาและความปลอดภัยเบื้องต้นได้ค่ะ หากมีอาการปวดศีรษะหรือต้องการใช้ยา แนะนำปรึกษาแพทย์หรือเภสัชกรเพื่อรับคำแนะนำที่ถูกต้องนะคะ
                   </div>
                   
                   {/* Step 3: Scanning Safety Rules */}
@@ -143,13 +143,13 @@ export function AgentPhoneMockup() {
 
                   {/* Step 4: Final Warning Card */}
                   {chatState === 'replied_full' && (
-                    <div className="bg-[#fff1f2] border border-[#ffe4e6] p-3 rounded-xl shadow-xs animate-in zoom-in-95 duration-300">
-                      <div className="flex items-center gap-1.5 mb-1 text-[#b42318] text-xs font-bold">
-                        <Activity className="w-3.5 h-3.5" />
-                        ระบบคัดกรองความปลอดภัย
+                    <div className="bg-[#f0fdf4] border border-[#dcfce7] p-3 rounded-xl shadow-xs animate-in zoom-in-95 duration-300">
+                      <div className="flex items-center gap-1.5 mb-1 text-[#166534] text-xs font-bold">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        ระบบตรวจสอบความปลอดภัยเบื้องต้น
                       </div>
-                      <div className="text-[11px] text-[#9f1239] leading-relaxed">
-                        ตรวจสอบจากประวัติสุขภาพของคุณในระบบ ไม่พบโรคประจำตัวเกี่ยวกับตับ สามารถทานได้ปลอดภัยค่ะ แต่ถ้าทานแล้วอาการไม่ดีขึ้นภายใน 24 ชม. แนะนำให้พบแพทย์นะคะ
+                      <div className="text-[11px] text-[#15803d] leading-relaxed">
+                        การคัดกรองนี้เป็นเพียงข้อมูลประกอบเบื้องต้น ไม่สามารถใช้ทดแทนการวินิจฉัยหรือคำสั่งการรักษาของแพทย์และเภสัชกรผู้เชี่ยวชาญได้
                       </div>
                     </div>
                   )}

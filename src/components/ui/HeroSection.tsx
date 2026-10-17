@@ -10,7 +10,7 @@ export function HeroSection({ onExploreClick }: HeroSectionProps) {
   const userPillars = [
     {
       title: 'สแกนฉลากยา รู้ผลทันที',
-      desc: 'สแกน QR / Barcode บนซองยา เช็กยาตีกันและของกินต้องห้ามได้ทันที',
+      desc: 'สแกน QR / Barcode บนซองยา เช็กยาตีกันและอาหารที่ควรระวังเบื้องต้น',
       icon: ShieldCheck,
       color: 'text-[#216e63]',
       bg: 'bg-[#e5f4f0]',
