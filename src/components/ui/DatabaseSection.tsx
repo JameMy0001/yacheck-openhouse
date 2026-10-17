@@ -34,10 +34,10 @@ export function DatabaseSection() {
       icon: Utensils,
     },
     {
-      title: 'สถานะการตรวจทาน',
-      subtitle: 'Verification Status',
-      value: 'Verified',
-      status: 'อ้างอิงฐานข้อมูลทางการแพทย์มาตรฐาน',
+      title: 'แหล่งอ้างอิงสากล',
+      subtitle: 'Clinical Sources',
+      value: '4',
+      status: 'FDA • DailyMed • PubMed',
       statusColor: 'text-[#067647]',
       dotColor: 'bg-[#067647]',
       badgeBg: 'bg-[#d1fadf]',
@@ -70,10 +70,10 @@ export function DatabaseSection() {
   ]
 
   const foodHerbalSamples = [
-    { name: 'ฟ้าทะลายโจร (Andrographis)', code: 'H_ANDROGRAPHIS_001', note: 'กลุ่มสมุนไพรที่มีรายงานปฏิกิริยาร่วมกับยาบางประเภท' },
-    { name: 'ใบแปะก๊วย (Ginkgo Biloba)', code: 'H_GINKGO_001', note: 'กลุ่มสารสกัดสมุนไพรในรายการเฝ้าระวังปฏิกิริยาร่วมกับยา' },
-    { name: 'น้ำเกรปฟรุต (Grapefruit)', code: 'F_GRAPEFRUIT_001', note: 'กลุ่มผลไม้ที่มีผลต่อกระบวนการดูดซึมยาบางกลุ่ม' },
-    { name: 'นมและผลิตภัณฑ์แคลเซียม', code: 'F_DAIRY_001', note: 'กลุ่มอาหารและเครื่องดื่มที่อาจส่งผลต่อการดูดซึมยาบางชนิด' },
+    { name: 'ฟ้าทะลายโจร (Andrographis)', code: 'H_ANDROGRAPHIS_001', note: 'สมุนไพรในกลุ่มเฝ้าระวังปฏิกิริยาร่วมกับยา' },
+    { name: 'ใบแปะก๊วย (Ginkgo Biloba)', code: 'H_GINKGO_001', note: 'สารสกัดในกลุ่มเฝ้าระวังปฏิกิริยาร่วมกับยา' },
+    { name: 'น้ำเกรปฟรุต (Grapefruit)', code: 'F_GRAPEFRUIT_001', note: 'ผลไม้ที่มีผลต่อการดูดซึมยาบางกลุ่ม' },
+    { name: 'นมและผลิตภัณฑ์แคลเซียม', code: 'F_DAIRY_001', note: 'เครื่องดื่มที่มีผลต่อการดูดซึมยาบางชนิด' },
   ]
 
   const authoritySources = [
@@ -124,27 +124,27 @@ export function DatabaseSection() {
             const Icon = card.icon
             return (
               <ScrollReveal key={i} direction="up" delay={0.08 * i}>
-                <div className="p-6 rounded-3xl border border-[#dde5e2] bg-white/95 shadow-sm hover:shadow-md hover:border-[#216e63]/30 transition-all flex flex-col justify-between h-full">
+                <div className="p-6 rounded-3xl border border-[#dde5e2] bg-white/95 shadow-sm hover:shadow-md hover:border-[#216e63]/30 transition-all flex flex-col justify-between h-full overflow-hidden">
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono font-bold text-[#4a5855] uppercase tracking-wider">
+                      <span className="text-xs font-mono font-bold text-[#4a5855] uppercase tracking-wider truncate">
                         {card.subtitle}
                       </span>
-                      <div className="p-2 rounded-xl bg-[#f6f8f7] text-[#216e63] border border-[#dde5e2]">
+                      <div className="p-2 rounded-xl bg-[#f6f8f7] text-[#216e63] border border-[#dde5e2] flex-shrink-0">
                         <Icon className="w-4 h-4" />
                       </div>
                     </div>
-                    <div className="text-4xl sm:text-5xl font-black text-[#17211f] font-mono tracking-tight mb-1">
+                    <div className="text-4xl sm:text-5xl font-black text-[#17211f] font-mono tracking-tight mb-1 truncate">
                       {card.value}
                     </div>
-                    <div className="text-sm font-bold text-[#17211f] mb-3 leading-snug">
+                    <div className="text-sm font-bold text-[#17211f] mb-3 leading-snug truncate">
                       {card.title}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 pt-3 border-t border-[#dde5e2]/70 text-[11px] font-mono font-bold">
-                    <span className={`w-2 h-2 rounded-full ${card.dotColor}`} />
-                    <span className={card.statusColor}>{card.status}</span>
+                    <span className={`w-2 h-2 rounded-full ${card.dotColor} flex-shrink-0`} />
+                    <span className={`${card.statusColor} whitespace-nowrap truncate`}>{card.status}</span>
                   </div>
                 </div>
               </ScrollReveal>
