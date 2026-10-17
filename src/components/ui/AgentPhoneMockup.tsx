@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Mic, Send, Sparkles, User, ShieldCheck, ChevronLeft, MoreHorizontal, Activity, RefreshCw } from 'lucide-react'
+import { Mic, Send, Sparkles, User, ShieldCheck, ChevronLeft, MoreHorizontal, RefreshCw } from 'lucide-react'
 
 export function AgentPhoneMockup() {
   const [chatState, setChatState] = useState<'idle' | 'typing' | 'replying_text' | 'scanning_safety' | 'replied_full'>('idle')
